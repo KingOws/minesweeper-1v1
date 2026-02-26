@@ -1,20 +1,9 @@
 #include <SFML/Graphics.hpp>
+#include "menu.h"
 
 int main()
-{
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML 3 Works!");
-
-    while (window.isOpen())
-    {
-        while (auto event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-        }
-
-        window.clear();
-        window.display();
-    }
-
+{   
+    Menu m;
+    m.drawMenu();
     return 0;
 }

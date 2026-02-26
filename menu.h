@@ -2,6 +2,7 @@
 #include "board.h"
 #include <iostream>
 #include <string>
+#include <SFML/Graphics.hpp>
 
 class Menu{
     private:
