@@ -10,7 +10,7 @@ Menu::~Menu(){
 }
 
 void Menu::drawMenu(){
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML 3 Works!");
+    sf::RenderWindow window(sf::VideoMode({500, 600}), "Minesweeper Client");
 
     while (window.isOpen())
     {
@@ -21,10 +21,16 @@ void Menu::drawMenu(){
         }
 
         window.clear();
+
+        if (board != nullptr) {
+            board->updateBoard();
+            board->drawBoard(window);
+        }
+
         window.display();
     }
 }
 
-void Menu::createBoard(int r, int c){
-    board = new Board(r,c);
+void Menu::createBoard(int r, int c, int b){
+    board = new Board(r,c,b);
 }

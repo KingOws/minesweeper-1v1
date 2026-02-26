@@ -12,6 +12,6 @@ class Menu{
     Menu();
     ~Menu();
     void drawMenu();
-    void createBoard(int, int);
+    void createBoard(int, int, int);
 
 };
