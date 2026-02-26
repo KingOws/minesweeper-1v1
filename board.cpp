@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <random>
 
 Board::Board(){
@@ -13,11 +14,15 @@ Board::Board(){
 Board::Board(int r, int c, int b){
     row = r;
     col = c;
-    bombs = b;
+    numBombs = b;
     tiles = new Tile[row * col];
-    for (size_t i = 0; i < bombs; i++) {
-
-    } 
+    for (size_t i = 0; i < numBombs; i++) {
+        sf::Vector2i randomPos;
+        do {
+            randomPos = getRandomGridPos();
+        } while (getTile(randomPos.x, randomPos.y)->isBomb());
+        getTile(randomPos.x, randomPos.y)->setBomb();
+    };
 }
 
 Board::~Board(){

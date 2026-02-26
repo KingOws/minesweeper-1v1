@@ -2,13 +2,15 @@
 #include "tile.h"
 #include <SFML/Graphics.hpp>
 #include <random>
+#include <vector>
 #include <SFML/System/Vector2.hpp>
 
 class Board{
     private:
         int row;
         int col;
-        int bombs;
+        int numBombs;
+        std::vector<Tile*> bombs;
         Tile* tiles;
 
     public:
@@ -25,7 +27,7 @@ class Board{
 
             return sf::Vector2i(distX(gen), distY(gen));
         };
-        
+
         Tile* getTile(int x, int y) const {return &tiles[x*col+y];};
         void updateBoard();
         void drawBoard(sf::RenderWindow &window);

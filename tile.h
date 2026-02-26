@@ -20,6 +20,7 @@ class Tile{
     inline int getPos_x() const {return pos_x;};
     inline int getPos_y() const {return pos_y;};
     inline bool isBomb() const {return bomb;}
+    inline void setBomb() {bomb = true;}
 
     inline void setValue(int v) {value = v;}
 };
