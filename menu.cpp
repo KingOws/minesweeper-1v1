@@ -12,6 +12,10 @@ Menu::~Menu(){
 void Menu::drawMenu(){
     sf::RenderWindow window(sf::VideoMode({500, 600}), "Minesweeper Client");
 
+    if (board != nullptr) {
+        board->updateBoard();
+    }
+    
     while (window.isOpen())
     {
         while (auto event = window.pollEvent())
