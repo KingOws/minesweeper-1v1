@@ -9,8 +9,7 @@ Menu::~Menu(){
 
 }
 
-void Menu::drawMenu(){
-    sf::RenderWindow window(sf::VideoMode({500, 600}), "Minesweeper Client");
+void Menu::drawMenu(sf::RenderWindow &window){
 
     if (board != nullptr) {
         board->updateBoard();

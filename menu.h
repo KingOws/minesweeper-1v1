@@ -11,7 +11,7 @@ class Menu{
     public:
     Menu();
     ~Menu();
-    void drawMenu();
+    void drawMenu(sf::RenderWindow &window);
     void createBoard(int, int, int);
 
 };
