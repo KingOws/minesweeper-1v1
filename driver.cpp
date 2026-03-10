@@ -3,13 +3,19 @@
 
 int main()
 {   
-    sf::RenderWindow window(sf::VideoMode({500, 600}), "Minesweeper Client");
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "Minesweeper Client");
     Menu m;
-    float bombDensity = 0.12;
-    int rows = 16;
-    int columns = 16;
-    
-    m.createBoard(rows, columns, round(rows*columns*bombDensity));
-    m.drawMenu(window);
+
+    while (window.isOpen()){
+        while (auto event = window.pollEvent())
+        {
+            if (event->is<sf::Event::Closed>())
+                window.close();
+        }
+
+        window.clear({225,255,225,225});
+        m.drawMenu(window);
+        window.display();
+    }
     return 0;
 }
