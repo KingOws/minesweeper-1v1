@@ -42,3 +42,18 @@ std::string Menu::handleClick(sf::Vector2f mousePos){
 void Menu::createBoard(int r, int c, int b){
     board = new Board(r,c,b);
 }
+
+void Menu::createPlayer(){
+    player = new Player();
+}
+
+
+bool Menu::isBoard(){
+    if(board == nullptr)
+        return false;
+    return true;
+}
+
+Player Menu::getPlayer(){
+    return *player;
+}

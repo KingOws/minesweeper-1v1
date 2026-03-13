@@ -15,7 +15,9 @@ Board::Board(int r, int c, int b){
     row = r;
     col = c;
     numBombs = b;
+
     tiles = new Tile[row * col];
+
     std::cout << "Board created with: \n";
     std::cout << "ROWS: " << row << " COL: " << col << " BOMBS: " << numBombs << '\n';
 

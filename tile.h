@@ -4,7 +4,7 @@
 class Tile{
     private:
 
-    static const int size = 10;
+    static const int size = 25;
     int pos_x;
     int pos_y;
     bool flag;
