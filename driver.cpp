@@ -9,10 +9,11 @@ int main()
 
     while (window.isOpen()){
         while (auto event = window.pollEvent()){
+            const sf::Event& e = *event;
             if (event->is<sf::Event::Closed>())
                 window.close();
-            m.getPlayer().leftClick(window, m, event);
-            m.getPlayer().rightClick(window, m, event);
+            m.getPlayer().leftClick(window, m, e);
+            m.getPlayer().rightClick(window, m, e);
         }
     window.clear({225,255,225,225});
     m.drawMenu(window);

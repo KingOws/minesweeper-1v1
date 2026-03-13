@@ -9,6 +9,6 @@ class Player{
 
     public:
     Player();
-    void leftClick(sf::RenderWindow&, Menu&, const std::optional<sf::Event>&);
-    void rightClick(sf::RenderWindow&, Menu&, const std::optional<sf::Event>&);
+    void leftClick(sf::RenderWindow&, Menu&, const sf::Event&);
+    void rightClick(sf::RenderWindow&, Menu&, const sf::Event&);
 };

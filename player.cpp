@@ -7,9 +7,9 @@ Player::Player(){
     
 }
 
-void Player::leftClick(sf::RenderWindow& window, Menu& menu, const std::optional<sf::Event>& event){
-    if(event->is<sf::Event::MouseButtonPressed>()){
-        auto mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
+void Player::leftClick(sf::RenderWindow& window, Menu& menu, const sf::Event& event){
+    if(event.is<sf::Event::MouseButtonPressed>()){
+        auto mouseEvent = event.getIf<sf::Event::MouseButtonPressed>();
         if(mouseEvent->button == sf::Mouse::Button::Left){
             sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
             if(!menu.isBoard()){
@@ -22,9 +22,9 @@ void Player::leftClick(sf::RenderWindow& window, Menu& menu, const std::optional
     }
 }
 
-void Player::rightClick(sf::RenderWindow& window, Menu& menu, const std::optional<sf::Event>& event){
-    if(event->is<sf::Event::MouseButtonPressed>()){
-        auto mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
+void Player::rightClick(sf::RenderWindow& window, Menu& menu, const sf::Event& event){
+    if(event.is<sf::Event::MouseButtonPressed>()){
+        auto mouseEvent = event.getIf<sf::Event::MouseButtonPressed>();
         if(mouseEvent->button == sf::Mouse::Button::Right){
             sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
             if(menu.isBoard()){
