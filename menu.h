@@ -20,7 +20,7 @@ class Menu{
     ~Menu();
     void drawMenu(sf::RenderWindow &window);
     void drawBoard(sf::RenderWindow &window);
-    std::string handleClick(sf::Vector2f mousePos);
+    std::string setDifficulty(sf::Vector2f mousePos);
     void createBoard(int, int, int);
     void createPlayer();
     Player getPlayer();

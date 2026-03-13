@@ -28,7 +28,7 @@ void Menu::drawMenu(sf::RenderWindow &window){
 }
 
 
-std::string Menu::handleClick(sf::Vector2f mousePos){
+std::string Menu::setDifficulty(sf::Vector2f mousePos){
     if(boxes[0].getGlobalBounds().contains(mousePos))
         return "easy";
     if(boxes[1].getGlobalBounds().contains(mousePos))

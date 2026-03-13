@@ -13,7 +13,7 @@ void Player::leftClick(sf::RenderWindow& window, Menu& menu, const sf::Event& ev
         if(mouseEvent->button == sf::Mouse::Button::Left){
             sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
             if(!menu.isBoard()){
-                std::string difficulty = menu.handleClick(mousePos);
+                std::string difficulty = menu.setDifficulty(mousePos);
                 if(difficulty == "easy"){menu.createBoard(9,9,10);}
                 if(difficulty == "medium"){menu.createBoard(16,16,40);}
                 if(difficulty == "hard"){menu.createBoard(16,30,99);}
