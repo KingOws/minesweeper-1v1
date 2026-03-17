@@ -9,6 +9,8 @@
 class Menu{
     private:
     sf::RectangleShape boxes[3];
+    sf::Font font;
+    sf::Text textFields[3];
     Board* board;
     Player* player;
     float bombDensity = 0.12;
