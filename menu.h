@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+class Player;  // Forward declare Player
+
 class Menu{
     private:
     sf::RectangleShape boxes[3];

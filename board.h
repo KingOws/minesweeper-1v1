@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <vector>
-#include <SFML/System/Vector2.hpp>
+#include "spritemanager.h"
 
 class Board{
     private:
@@ -12,6 +12,7 @@ class Board{
         int numBombs;
         std::vector<Tile*> bombs;
         Tile* tiles;
+        SpriteManager* sm;
 
     public:
         Board();

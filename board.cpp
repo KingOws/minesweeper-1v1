@@ -9,6 +9,7 @@ Board::Board(){
     row = 0;
     col = 0;
     tiles = nullptr;
+    sm = nullptr;
 }
 
 Board::Board(int r, int c, int b){
@@ -17,6 +18,7 @@ Board::Board(int r, int c, int b){
     numBombs = b;
 
     tiles = new Tile[row * col];
+    sm = new SpriteManager(0);
 
     std::cout << "Board created with: \n";
     std::cout << "ROWS: " << row << " COL: " << col << " BOMBS: " << numBombs << '\n';
@@ -29,13 +31,14 @@ Board::Board(int r, int c, int b){
 
             t->setPos_x(j);
             t->setPos_y(i);
-            t->updateRect();
+            t->updateSprite(*sm);
         }
     }
 }
 
 Board::~Board(){
     delete[] tiles;
+    delete sm;
 }
 
 void Board::drawBoard(sf::RenderWindow& window){
@@ -69,7 +72,9 @@ void Board::updateBoard() {
                     }
                 }
             }
+            currentTile->setOpened(true);
             currentTile->setValue(bombs);
+            currentTile->updateSprite(*sm);
         }
     }
 }

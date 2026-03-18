@@ -1,8 +1,9 @@
 #pragma once
 #include <optional>
 #include <SFML/Graphics.hpp>
+#include "menu.h"
 
-class Menu;
+class Menu;  // Forward declare Menu
 
 class Player{
     private:

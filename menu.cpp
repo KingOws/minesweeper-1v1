@@ -3,7 +3,7 @@
 
 Menu::Menu() : textFields{sf::Text(font), sf::Text(font), sf::Text(font)} {
     board = nullptr;
-    if (!font.openFromFile("../arial.ttf")) {
+    if (!font.openFromFile("../fonts/arial.ttf")) {
         std::cerr << "Error: could not load font" << std::endl;
     }
 
@@ -73,6 +73,7 @@ std::string Menu::setDifficulty(sf::Vector2f mousePos){
 
 void Menu::createBoard(int r, int c, int b){
     board = new Board(r,c,b);
+    board->updateBoard();
 }
 
 void Menu::createPlayer(){
