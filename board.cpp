@@ -21,15 +21,8 @@ Board::Board(int r, int c, int b){
     std::cout << "Board created with: \n";
     std::cout << "ROWS: " << row << " COL: " << col << " BOMBS: " << numBombs << '\n';
 
-    for (size_t i = 0; i < numBombs; i++) {
-        sf::Vector2i randomPos;
-        do {
-            randomPos = getRandomGridPos();
-        } while (getTile(randomPos.x, randomPos.y)->isBomb());
-        getTile(randomPos.x, randomPos.y)->setBomb();
-    };
+    generateBombs();
 
-    
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             Tile* t = getTile(i, j);
@@ -78,5 +71,21 @@ void Board::updateBoard() {
             }
             currentTile->setValue(bombs);
         }
+    }
+}
+
+void Board::generateBombs() {
+    for (size_t i = 0; i < getSize(); i++) {
+        bombs.push_back(&tiles[i]);
+    }
+    
+    while(bombs.size() > numBombs) {
+        static std::mt19937 gen(std::random_device{}());
+        std::uniform_int_distribution<> disp(0, bombs.size());
+        bombs.erase(bombs.begin() + disp(gen));
+    }
+
+    for (Tile* t: bombs) {
+        t->setBomb(true);
     }
 }

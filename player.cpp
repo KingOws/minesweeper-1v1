@@ -16,7 +16,7 @@ void Player::leftClick(sf::RenderWindow& window, Menu& menu, const sf::Event& ev
                 std::string difficulty = menu.setDifficulty(mousePos);
                 if(difficulty == "easy"){menu.createBoard(9,9,10);}
                 if(difficulty == "medium"){menu.createBoard(16,16,40);}
-                if(difficulty == "hard"){menu.createBoard(16,30,99);}
+                if(difficulty == "hard"){menu.createBoard(16,30,75);}
             }
         }
     }

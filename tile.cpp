@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 Tile::Tile() {
+    this->exists = false;
+
     this->bomb = false;
     this->flag = false;
     this->opened = false;
@@ -12,6 +14,8 @@ Tile::Tile() {
 }
 
 Tile::Tile(int pos_x, int pos_y, bool isBomb) {
+    this->exists = true;
+
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->bomb = isBomb;

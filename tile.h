@@ -3,7 +3,7 @@
 
 class Tile{
     private:
-
+    bool exists;
     static const int size = 25;
     int pos_x;
     int pos_y;
@@ -22,7 +22,7 @@ class Tile{
     inline int getPos_x() const {return pos_x;};
     inline int getPos_y() const {return pos_y;};
     inline bool isBomb() const {return bomb;};
-    inline void setBomb() {bomb = true;};
+    inline void setBomb(bool b) {bomb = b;};
     inline void setPos_x(int p) {pos_x = p;};
     inline void setPos_y(int p) {pos_y = p;};
     void updateRect();
