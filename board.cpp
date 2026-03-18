@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <random>
 
 Board::Board(){
@@ -63,6 +62,7 @@ void Board::updateBoard() {
 
                     int nx = i + dx;
                     int ny = j + dy;
+                    if (!((nx >= 0 && nx < row) && (ny >= 0 && ny < col))) continue;
 
                     Tile* neighbour = getTile(nx, ny);
                     if (neighbour != nullptr) {
@@ -86,7 +86,7 @@ void Board::generateBombs() {
     
     while(bombs.size() > numBombs) {
         static std::mt19937 gen(std::random_device{}());
-        std::uniform_int_distribution<> disp(0, bombs.size());
+        std::uniform_int_distribution<> disp(0, bombs.size()-1);
         bombs.erase(bombs.begin() + disp(gen));
     }
 
