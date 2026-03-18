@@ -18,6 +18,10 @@ void Player::leftClick(sf::RenderWindow& window, Menu& menu, const sf::Event& ev
                 if(difficulty == "medium"){menu.createBoard(16,16,40);}
                 if(difficulty == "hard"){menu.createBoard(16,30,75);}
             }
+
+            if(menu.isBoard()){
+                menu.getBoard()->revealTile(mousePos);
+            }
         }
     }
 }
@@ -28,7 +32,7 @@ void Player::rightClick(sf::RenderWindow& window, Menu& menu, const sf::Event& e
         if(mouseEvent->button == sf::Mouse::Button::Right){
             sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
             if(menu.isBoard()){
-
+                menu.getBoard()->placeFlag(mousePos);
             }
         }
     }

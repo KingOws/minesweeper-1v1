@@ -24,5 +24,7 @@ class Board{
         int getSize() const {return row * col;};
         void updateBoard();
         void generateBombs();
+        void placeFlag(sf::Vector2f);
+        void revealTile(sf::Vector2f);
         void drawBoard(sf::RenderWindow &window);
 };

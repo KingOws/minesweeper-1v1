@@ -27,7 +27,13 @@ class Menu{
     std::string setDifficulty(sf::Vector2f mousePos);
     void createBoard(int, int, int);
     void createPlayer();
-    Player getPlayer();
-    bool isBoard();
+
+    inline Player* getPlayer(){return player;};
+    inline Board* getBoard(){return board;};
+    inline bool isBoard(){
+        if(board == nullptr)
+            return false;
+        return true;
+    }
 
 };

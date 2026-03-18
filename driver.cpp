@@ -19,8 +19,8 @@ int main()
             const sf::Event& e = *event;
             if (event->is<sf::Event::Closed>())
                 window.close();
-            m.getPlayer().leftClick(window, m, e);
-            m.getPlayer().rightClick(window, m, e);
+            m.getPlayer()->leftClick(window, m, e);
+            m.getPlayer()->rightClick(window, m, e);
         }
     window.clear({225,255,225,225});
     m.drawMenu(window);

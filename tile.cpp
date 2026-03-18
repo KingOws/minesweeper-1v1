@@ -7,14 +7,11 @@ bool Tile::loaded = false;
 
 Tile::Tile() : sprite(defaultTexture) {
     this->exists = false;
-
     this->bomb = false;
     this->flag = false;
     this->opened = false;
-    
 
     loadDefaultTexture();
-    
 }
 
 Tile::Tile(int pos_x, int pos_y, bool isBomb) : sprite(defaultTexture) {

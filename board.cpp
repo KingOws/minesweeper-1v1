@@ -17,7 +17,7 @@ Board::Board(int r, int c, int b){
     numBombs = b;
 
     tiles = new Tile[row * col];
-    sm = new SpriteManager(0);
+    sm = new SpriteManager(0);    
 
     std::cout << "Board created with: \n";
     std::cout << "ROWS: " << row << " COL: " << col << " BOMBS: " << numBombs << '\n';
@@ -55,7 +55,6 @@ void Board::updateBoard() {
             Tile* currentTile = getTile(i, j);
             int bombs = 0;
 
-
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dy = -1; dy <= 1; dy++) {
                     if (dx == 0 && dy == 0) continue;
@@ -72,7 +71,7 @@ void Board::updateBoard() {
                     }
                 }
             }
-            currentTile->setOpened(true);
+            currentTile->setOpened(false);
             currentTile->setValue(bombs);
             currentTile->updateSprite(*sm);
         }
@@ -93,4 +92,22 @@ void Board::generateBombs() {
     for (Tile* t: bombs) {
         t->setBomb(true);
     }
+}
+
+void Board::placeFlag(sf::Vector2f mousePos){
+    int x = mousePos.x/9;
+    int y = mousePos.y/9;
+
+    Tile* tile = getTile(1,1);
+    tile->setFlag(true);
+    tile->updateSprite(*sm);
+}
+
+void Board::revealTile(sf::Vector2f mousePos){
+    int x = mousePos.x/9;
+    int y = mousePos.y/9;
+
+    Tile* tile = getTile(1,1);
+    tile->setOpened(true);
+    tile->updateSprite(*sm);
 }

@@ -81,12 +81,4 @@ void Menu::createPlayer(){
 }
 
 
-bool Menu::isBoard(){
-    if(board == nullptr)
-        return false;
-    return true;
-}
 
-Player Menu::getPlayer(){
-    return *player;
-}
