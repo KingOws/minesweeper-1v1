@@ -27,6 +27,7 @@ class Board{
         void setLost(bool l) {lost = l;};
         void updateBoard();
         void generateBombs();
+        void showBombs();
         sf::Vector2i handleMouse(sf::Vector2f mousePos);
         void placeFlag(sf::Vector2i);
         bool revealTile(sf::Vector2i, bool clicked=true);

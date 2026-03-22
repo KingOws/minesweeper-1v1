@@ -103,7 +103,7 @@ void Board::placeFlag(sf::Vector2i mousePos){
 
     Tile* tile = getTile(x,y);
     if (tile->isOpened()) return;
-    tile->setFlag(true);
+    tile->setFlag(!tile->isFlagged());
     tile->updateSprite(*sm);
 }
 
@@ -114,7 +114,25 @@ bool Board::revealTile(sf::Vector2i mousePos, bool clicked){
     if (y < 0 || y >= col) return false;
 
     Tile* tile = getTile(x,y);
-    if (tile->isOpened() || tile->isFlagged()) return false;
+    if (tile->isFlagged()) return false;
+
+    if (tile->isOpened() && clicked) {
+        bool hitAbomb = false;
+        int numberOfFlags = 0;
+        std::vector<Tile*> neighbours;
+        getNeighbours(x, y, neighbours);
+        for (Tile* neighbour : neighbours) {
+            if (neighbour->isFlagged()) numberOfFlags++;
+        }
+        if (numberOfFlags == tile->getValue()) {
+            for (Tile* neighbour : neighbours) {
+                if (!neighbour->isOpened()) hitAbomb = revealTile(sf::Vector2i(neighbour->getPos_x(), neighbour->getPos_y()));
+                if (hitAbomb) break;
+            }
+        }
+        
+        return hitAbomb;
+    }
 
     tile->setOpened(true);
 
@@ -138,6 +156,7 @@ bool Board::revealTile(sf::Vector2i mousePos, bool clicked){
     tile->updateSprite(*sm);
 
     if (tile->isBomb()) {
+        showBombs();
         return true;
     }
 
@@ -157,6 +176,15 @@ void Board::getNeighbours(int x, int y, std::vector<Tile*>& neighbours) const {
             if (neighbour != nullptr) {
                 neighbours.push_back(neighbour);
             }
+        }
+    }
+}
+
+void Board::showBombs() {
+    for (Tile* bomb : bombs) {
+        if (!bomb->isOpened()) {
+            bomb->setOpened(true);
+            bomb->updateSprite(*sm, true);
         }
     }
 }

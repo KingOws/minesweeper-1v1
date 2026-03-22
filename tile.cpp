@@ -49,7 +49,7 @@ void Tile::loadDefaultTexture() {
     sprite = sf::Sprite(defaultTexture);
 }
 
-void Tile::updateSprite(const SpriteManager& manager) {
+void Tile::updateSprite(const SpriteManager& manager, bool reveal) {
     int index = 0;
 
     // NOT OPENED - 0
@@ -67,7 +67,8 @@ void Tile::updateSprite(const SpriteManager& manager) {
         }
     } else { // opened
         if (bomb) {
-            index = 11; // exploded bomb
+            if (reveal) index = 12; // revealed bomb
+            if (!reveal) index = 11; // exploded bomb
         } else if (value > 0) {
             index = 9-value; // numbers 1-8
         } else {

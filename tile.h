@@ -38,7 +38,7 @@ class Tile{
     inline void setFlag(bool f) {flag = f;};
 
     void loadDefaultTexture();
-    void updateSprite(const SpriteManager& manager);
+    void updateSprite(const SpriteManager& manager, bool reveal=false);
 
     inline void setValue(int v) {value = v;};
 };

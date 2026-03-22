@@ -16,10 +16,10 @@ void Player::leftClick(sf::RenderWindow& window, Menu& menu, const sf::Event& ev
                 std::string difficulty = menu.setDifficulty(mousePos);
                 if(difficulty == "easy"){menu.createBoard(9,9,10);}
                 if(difficulty == "medium"){menu.createBoard(16,16,40);}
-                if(difficulty == "hard"){menu.createBoard(16,30,75);}
+                if(difficulty == "hard"){menu.createBoard(16,30,90);}
             }
 
-            if(menu.isBoard() && !menu.getBoard()->getLost()){
+            else if(menu.isBoard() && !menu.getBoard()->getLost()){
                 menu.getBoard()->setLost(menu.getBoard()->revealTile(menu.getBoard()->handleMouse(mousePos)));
             }
         }
