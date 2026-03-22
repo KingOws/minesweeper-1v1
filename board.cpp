@@ -3,18 +3,21 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <random>
+#include "tile.h"
 
 Board::Board(){
     row = 0;
     col = 0;
     tiles = nullptr;
     sm = nullptr;
+    lost = false;
 }
 
 Board::Board(int r, int c, int b){
     row = r;
     col = c;
     numBombs = b;
+    lost = false;
 
     tiles = new Tile[row * col];
     sm = new SpriteManager(0);    
@@ -28,8 +31,8 @@ Board::Board(int r, int c, int b){
         for (int j = 0; j < col; j++) {
             Tile* t = getTile(i, j);
 
-            t->setPos_x(j);
-            t->setPos_y(i);
+            t->setPos_x(i);
+            t->setPos_y(j);
             t->updateSprite(*sm);
         }
     }
@@ -55,22 +58,14 @@ void Board::updateBoard() {
             Tile* currentTile = getTile(i, j);
             int bombs = 0;
 
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    if (dx == 0 && dy == 0) continue;
-
-                    int nx = i + dx;
-                    int ny = j + dy;
-                    if (!((nx >= 0 && nx < row) && (ny >= 0 && ny < col))) continue;
-
-                    Tile* neighbour = getTile(nx, ny);
-                    if (neighbour != nullptr) {
-                        if (neighbour->isBomb()) {
-                            bombs++;
-                        }
-                    }
+            std::vector<Tile*> neighbours;
+            getNeighbours(i, j, neighbours);
+            for (Tile* tile : neighbours) {
+                if (tile->isBomb()) {
+                    bombs++;
                 }
             }
+
             currentTile->setOpened(false);
             currentTile->setValue(bombs);
             currentTile->updateSprite(*sm);
@@ -94,20 +89,74 @@ void Board::generateBombs() {
     }
 }
 
-void Board::placeFlag(sf::Vector2f mousePos){
-    int x = mousePos.x/9;
-    int y = mousePos.y/9;
+sf::Vector2i Board::handleMouse(sf::Vector2f mousePos) {
+    int x = mousePos.x/Tile::getSize();
+    int y = mousePos.y/Tile::getSize();
+    return sf::Vector2i(x, y);
+}
 
-    Tile* tile = getTile(1,1);
+void Board::placeFlag(sf::Vector2i mousePos){
+    int x = mousePos.x;
+    int y = mousePos.y;
+    if (x < 0 || x >= row) return;
+    if (y < 0 || y >= col) return;
+
+    Tile* tile = getTile(x,y);
+    if (tile->isOpened()) return;
     tile->setFlag(true);
     tile->updateSprite(*sm);
 }
 
-void Board::revealTile(sf::Vector2f mousePos){
-    int x = mousePos.x/9;
-    int y = mousePos.y/9;
+bool Board::revealTile(sf::Vector2i mousePos, bool clicked){
+    int x = mousePos.x;
+    int y = mousePos.y;
+    if (x < 0 || x >= row) return false;
+    if (y < 0 || y >= col) return false;
 
-    Tile* tile = getTile(1,1);
+    Tile* tile = getTile(x,y);
+    if (tile->isOpened() || tile->isFlagged()) return false;
+
     tile->setOpened(true);
+
+    if (tile->getValue() == 0) {
+        std::vector<Tile*> neighbours;
+        getNeighbours(x, y, neighbours);
+        for (size_t i = 0; i < neighbours.size(); ) {
+            if (neighbours[i]->isOpened()) {
+                neighbours.erase(neighbours.begin() + i);
+            } else {
+                i++;
+            }
+        }
+
+        for (Tile* tile : neighbours) {
+            revealTile(sf::Vector2i(tile->getPos_x(), tile->getPos_y()), false);
+        }
+    }
+
+
     tile->updateSprite(*sm);
+
+    if (tile->isBomb()) {
+        return true;
+    }
+
+    return false;
+}
+
+void Board::getNeighbours(int x, int y, std::vector<Tile*>& neighbours) const {
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            if (dx == 0 && dy == 0) continue;
+
+            int nx = x + dx;
+            int ny = y + dy;
+            if (!(nx >= 0 && nx < col && ny >= 0 && ny < row)) continue;
+
+            Tile* neighbour = getTile(nx, ny);
+            if (neighbour != nullptr) {
+                neighbours.push_back(neighbour);
+            }
+        }
+    }
 }

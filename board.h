@@ -10,6 +10,7 @@ class Board{
         int row;
         int col;
         int numBombs;
+        bool lost;
         std::vector<Tile*> bombs;
         Tile* tiles;
         SpriteManager* sm;
@@ -20,11 +21,15 @@ class Board{
         Board(int r, int c, int b);
 
 
-        Tile* getTile(int x, int y) const {return &tiles[x*col+y];};
+        Tile* getTile(int x, int y) const {return &tiles[y*col+x];};
         int getSize() const {return row * col;};
+        bool getLost() const {return lost;};
+        void setLost(bool l) {lost = l;};
         void updateBoard();
         void generateBombs();
-        void placeFlag(sf::Vector2f);
-        void revealTile(sf::Vector2f);
+        sf::Vector2i handleMouse(sf::Vector2f mousePos);
+        void placeFlag(sf::Vector2i);
+        bool revealTile(sf::Vector2i, bool clicked=true);
         void drawBoard(sf::RenderWindow &window);
+        void getNeighbours(int x, int y, std::vector<Tile*>& neighbours) const;
 };
