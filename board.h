@@ -11,6 +11,7 @@ class Board{
         int col;
         int numBombs;
         bool lost;
+        bool won;
         std::vector<Tile*> bombs;
         Tile* tiles;
         SpriteManager* sm;
@@ -23,8 +24,12 @@ class Board{
 
         Tile* getTile(int x, int y) const {return &tiles[y*col+x];};
         int getSize() const {return row * col;};
+        int getCol() const {return col;};
+        int getRow() const {return row;};
         bool getLost() const {return lost;};
         void setLost(bool l) {lost = l;};
+        bool getWon() const {return won;};
+        void setWon(bool w) {won = w;};
         void updateBoard();
         void generateBombs();
         void showBombs();

@@ -25,6 +25,7 @@ int main()
     window.clear({225,255,225,225});
     m.drawMenu(window);
     window.display();
+    if(m.isBoard()){m.checkGameWon();}
     }
     return 0;
 }

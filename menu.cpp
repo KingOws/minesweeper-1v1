@@ -80,5 +80,19 @@ void Menu::createPlayer(){
     player = new Player();
 }
 
+void Menu::checkGameWon(){
+    for(int i = 0; i < board->getCol(); i++){
+        for(int j = 0; j < board->getRow(); j++){
+            if(!board->getTile(i,j)->isOpened() && !board->getTile(i,j)->isBomb()){
+                return;
+            }
+        }
+    }
+    board->setWon(true);
+    std::cout << "Winner winner chicken dinner!";
+    delete board;
+    return;
+}
+
 
 
