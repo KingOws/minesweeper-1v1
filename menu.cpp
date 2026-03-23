@@ -54,7 +54,8 @@ void Menu::drawMenu(sf::RenderWindow &window){
         for(sf::Text &text : textFields){
             window.draw(text);
         }
-    }else{
+    }
+    else{
         board->drawBoard(window);
     }
 }
@@ -89,8 +90,9 @@ void Menu::checkGameWon(){
         }
     }
     board->setWon(true);
-    std::cout << "Winner winner chicken dinner!";
     delete board;
+    board = nullptr;
+    std::cout << "Winner winner chicken dinner!";
     return;
 }
 
