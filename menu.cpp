@@ -29,7 +29,7 @@ Menu::Menu() : textFields{sf::Text(font), sf::Text(font), sf::Text(font)} {
             break;
         }
 
-                text.setFont(font);
+        text.setFont(font);
         text.setCharacterSize(36);
         text.setFillColor(sf::Color::Black);
 
@@ -82,6 +82,7 @@ void Menu::createPlayer(){
 }
 
 void Menu::checkGameWon(){
+    if (board == nullptr) return;
     for(int i = 0; i < board->getCol(); i++){
         for(int j = 0; j < board->getRow(); j++){
             if(!board->getTile(i,j)->isOpened() && !board->getTile(i,j)->isBomb()){
