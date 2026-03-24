@@ -16,6 +16,8 @@ add_executable(minesweeper
     tile.cpp
     menu.cpp
     spritemanager.cpp
+    lobbydiscovery.cpp
+    test.cpp
 )
 
 target_link_libraries(minesweeper
