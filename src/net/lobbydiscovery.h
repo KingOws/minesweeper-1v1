@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include <SFML/Network.hpp>
 #include <string>
 #include <vector>
@@ -20,4 +20,4 @@ public:
     bool pollForHosts(HostEntry& out);
     void pruneStaleHosts(std::vector<HostEntry>& hosts);
     void upsertHost(std::vector<HostEntry>& hosts, HostEntry& entry);
-};
+};*/

@@ -1,28 +1,29 @@
 cmake_minimum_required(VERSION 3.16)
-
 project(Minesweeper1v1)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# 1. Grab all your files
+file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
-find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
+# 2. Create the executable
+add_executable(minesweeper ${SOURCES})
 
-add_executable(minesweeper
-    driver.cpp
-    board.cpp
-    player.cpp
-    tile.cpp
-    menu.cpp
-    spritemanager.cpp
-    lobbydiscovery.cpp
-    test.cpp
+# 3. FORCE the include paths (Hardcoded)
+target_include_directories(minesweeper PRIVATE 
+    "src"
+    "src/core"
+    "src/game"
+    "src/net"
+    "src/scenes"
+    "C:/SFML-3.0.2/include"
 )
 
-target_link_libraries(minesweeper
-    PRIVATE
-    SFML::Graphics
-    SFML::Window
-    SFML::System
+# 4. Manually find the libraries (Hardcoded for MinGW)
+target_link_libraries(minesweeper PRIVATE
+    "C:/SFML-3.0.2/lib/libsfml-graphics.a"
+    "C:/SFML-3.0.2/lib/libsfml-window.a"
+    "C:/SFML-3.0.2/lib/libsfml-system.a"
+    "C:/SFML-3.0.2/lib/libsfml-network.a"
 )

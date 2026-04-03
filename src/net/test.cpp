@@ -1,4 +1,4 @@
-#include "lobbydiscovery.h"
+/*#include "lobbydiscovery.h"
 #include <iostream>
 
 int main() {
@@ -21,4 +21,4 @@ int main() {
             }
         }
     }
-}
+}*/
