@@ -47,13 +47,17 @@ void LobbyScene::draw(sf::RenderWindow &window){
     }
 }
 
-SceneAction LobbyScene::handleEvent(sf::Vector2f &mousePos){
+SceneAction LobbyScene::handleLeftEvent(sf::Vector2f& mousePos) {
     if (boxes[0].getGlobalBounds().contains(mousePos))
         return SceneAction::goToNetworking;
     if (boxes[1].getGlobalBounds().contains(mousePos))
         return SceneAction::goToMenu;
     return SceneAction::None;
 } 
+
+SceneAction LobbyScene::handleRightEvent(sf::Vector2f& mousePos) {
+    return SceneAction::None;
+}
 
 LobbyScene::~LobbyScene(){}
 

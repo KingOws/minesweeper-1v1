@@ -50,7 +50,7 @@ void MenuScene::draw(sf::RenderWindow &window){
     }
 }
 
-SceneAction MenuScene::handleEvent(sf::Vector2f &mousePos){
+SceneAction MenuScene::handleLeftEvent(sf::Vector2f &mousePos){
     for (int i = 0; i < 3; i++) {
         if (boxes[i].getGlobalBounds().contains(mousePos)) {
             this->difficulty = static_cast<Difficulty>(i);
@@ -59,6 +59,10 @@ SceneAction MenuScene::handleEvent(sf::Vector2f &mousePos){
     }
     return SceneAction::None;
 } 
+
+SceneAction MenuScene::handleRightEvent(sf::Vector2f &mousePos) {
+    return SceneAction::None;
+}
 
 MenuScene::~MenuScene(){}
 

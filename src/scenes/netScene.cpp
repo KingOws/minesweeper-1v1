@@ -47,7 +47,7 @@ void NetScene::draw(sf::RenderWindow &window){
     }
 }
 
-SceneAction NetScene::handleEvent(sf::Vector2f &mousePos){
+SceneAction NetScene::handleLeftEvent(sf::Vector2f &mousePos){
     for (int i = 0; i < 2; i++) {
         if (boxes[i].getGlobalBounds().contains(mousePos)) {
             this->networkingMode = static_cast<NetworkingMode>(i);
@@ -60,6 +60,10 @@ SceneAction NetScene::handleEvent(sf::Vector2f &mousePos){
     }
     return SceneAction::None;
 } 
+
+SceneAction NetScene::handleRightEvent(sf::Vector2f &mousePos) {
+    return SceneAction::None;
+}   
 
 NetScene::~NetScene(){}
 

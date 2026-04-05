@@ -13,7 +13,8 @@ class NetScene : public IScene{
     NetScene();
     virtual ~NetScene();
     virtual void draw(sf::RenderWindow &window);
-    virtual SceneAction handleEvent(sf::Vector2f &mousePos);
+    virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
+    virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update() {};
     virtual NetworkingMode getNetworkingMode(){return networkingMode;};
 };

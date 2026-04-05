@@ -24,7 +24,11 @@ int main()
                 auto mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
                 if(mouseEvent->button == sf::Mouse::Button::Left){
                     sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
-                    sm.processAction(sm.getScene()->handleEvent(mousePos));
+                    sm.processAction(sm.getScene()->handleLeftEvent(mousePos));
+                }
+                if(mouseEvent->button == sf::Mouse::Button::Right){
+                    sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
+                    sm.processAction(sm.getScene()->handleRightEvent(mousePos));
                 }
             }
         }

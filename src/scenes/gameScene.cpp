@@ -17,8 +17,13 @@ void GameScene::draw(sf::RenderWindow &window){
     board->drawBoard(window);
 }
 
-SceneAction GameScene::handleEvent(sf::Vector2f& mousePos) {
-    board->handleMouse(mousePos);
+SceneAction GameScene::handleLeftEvent(sf::Vector2f& mousePos) {
+    board->revealTile(board->handleMouse(mousePos));
+    return SceneAction::None;
+}
+
+SceneAction GameScene::handleRightEvent(sf::Vector2f& mousePos) {
+    board->placeFlag(board->handleMouse(mousePos));
     return SceneAction::None;
 }
 

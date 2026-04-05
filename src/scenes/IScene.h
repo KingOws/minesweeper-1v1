@@ -15,6 +15,7 @@ class IScene{
         IScene() {};
         virtual ~IScene() = default;
         virtual void draw(sf::RenderWindow &window) =0;
-        virtual SceneAction handleEvent(sf::Vector2f &mousePos) = 0;
+        virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos) = 0;
+        virtual SceneAction handleRightEvent(sf::Vector2f &mousePos) = 0;
         virtual void update() = 0;
 };

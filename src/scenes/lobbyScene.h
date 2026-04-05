@@ -13,7 +13,8 @@ class LobbyScene : public IScene{
     LobbyScene();
     virtual ~LobbyScene();
     virtual void draw(sf::RenderWindow &window);
-    virtual SceneAction handleEvent(sf::Vector2f &mousePos);
+    virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
+    virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update() {};
     virtual PlayerMode getPlayerMode(){return playermode;};
 };

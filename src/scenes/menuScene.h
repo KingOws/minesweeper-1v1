@@ -17,6 +17,7 @@ class MenuScene: public IScene{
     ~MenuScene();
     virtual void draw(sf::RenderWindow &window); 
     virtual void update() {return;};
-    virtual SceneAction handleEvent(sf::Vector2f &mousePos);
+    virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
+    virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     inline Difficulty getDiff(){return difficulty;};
 };
