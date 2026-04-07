@@ -1,4 +1,4 @@
-#include "LobbyScene.h"
+#include "lobbyScene.h"
 #include <iostream>
 
 LobbyScene::LobbyScene() : textFields{sf::Text(font), sf::Text(font)} {

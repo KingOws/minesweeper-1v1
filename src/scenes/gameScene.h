@@ -15,4 +15,6 @@ class GameScene: public IScene{
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
     virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update();
+
+    void checkGameWon();
 };

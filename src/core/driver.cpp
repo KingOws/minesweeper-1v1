@@ -21,7 +21,7 @@ int main()
             }
 
             if(event->is<sf::Event::MouseButtonPressed>()){
-                auto mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
+                const sf::Event::MouseButtonPressed* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
                 if(mouseEvent->button == sf::Mouse::Button::Left){
                     sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
                     sm.processAction(sm.getScene()->handleLeftEvent(mousePos));
@@ -32,9 +32,11 @@ int main()
                 }
             }
         }
-        window.clear({225,255,225,225});
-        sm.getScene()->update();
-        sm.getScene()->draw(window);
+
+        sm.updateAndSwap();
+
+        window.clear({255, 255, 255, 255});
+        sm.displayScene(window);
         window.display();
     }
     return 0;
