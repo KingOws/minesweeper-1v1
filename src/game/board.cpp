@@ -151,10 +151,7 @@ bool Board::revealTile(sf::Vector2i mousePos, bool clicked){
             revealTile(sf::Vector2i(tile->getPos_x(), tile->getPos_y()), false);
         }
     }
-
-
     tile->updateSprite(*sm);
-
     if (tile->isBomb()) {
         showBombs();
         return true;

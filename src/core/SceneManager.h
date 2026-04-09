@@ -3,7 +3,8 @@
 #include "menuScene.h"
 #include "gameScene.h"
 #include "netScene.h"
-#include "lobbyScene.h"
+#include "mainMenuScene.h"
+#include "lobbyBrowsingScene.h"
 #include <iostream>
 
 class SceneManager {
@@ -25,7 +26,7 @@ private:
 
 public:
     SceneManager() : nextScene(nullptr), shouldSwap(false) {
-        currScene = new LobbyScene();
+        currScene = new MainMenuScene();
     }
 
     ~SceneManager() {
@@ -82,11 +83,11 @@ public:
             break;
 
         case SceneAction::startLobby:
-            std::cout << "Hosting lobby...\n";
+            tempNext = new MenuScene("hosting"); 
             break;
 
         case SceneAction::searchLobby:
-            std::cout << "Searching for lobbies...\n";
+            tempNext = new LobbyBrowsingScene();
             break;
 
         case SceneAction::Exit:

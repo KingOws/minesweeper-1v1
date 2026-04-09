@@ -1,5 +1,13 @@
 #include "menuScene.h"
 #include <iostream>
+#include "lobbydiscovery.h"
+
+MenuScene::MenuScene(std::string s): MenuScene(){
+    if(s == "hosting"){
+        ld = LobbyDiscovery::createHost(6767);
+        std::cout << "hosting...";
+    }
+}
 
 MenuScene::MenuScene() : textFields{sf::Text(font), sf::Text(font), sf::Text(font)} {
     if (!font.openFromFile("../src/fonts/arial.ttf")) {

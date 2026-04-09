@@ -1,15 +1,37 @@
-/*#include "lobbydiscovery.h"
+#include "lobbydiscovery.h"
 #include <optional>
 #include <algorithm>
 
-void LobbyDiscovery::bindForListening() {
+LobbyDiscovery::LobbyDiscovery(Role role, unsigned short gamePort) : role(role), gamePort(gamePort){
     socket.setBlocking(false);
-    socket.bind(BROADCAST_PORT);
+    if (role == Role::Joiner)
+        socket.bind(BROADCAST_PORT);
 }
 
-void LobbyDiscovery::broadcastPresence(unsigned short gamePort) {
+std::unique_ptr<LobbyDiscovery> LobbyDiscovery::createHost(unsigned short gamePort) {
+    return std::unique_ptr<LobbyDiscovery>(new LobbyDiscovery(Role::Host, gamePort));
+}
+
+std::unique_ptr<LobbyDiscovery> LobbyDiscovery::createJoiner() {
+    return std::unique_ptr<LobbyDiscovery>(new LobbyDiscovery(Role::Joiner));
+}
+
+void LobbyDiscovery::tick(std::vector<HostEntry>& hosts) {
+    if (role == Role::Host) {
+        broadcastPresence();
+    } else {
+        pruneStaleHosts(hosts);
+        HostEntry entry;
+        if (pollForHosts(entry))
+            upsertHost(hosts, entry);
+    }
+}
+
+void LobbyDiscovery::broadcastPresence() {
     sf::Packet packet;
-    packet << std::string(MAGIC) << sf::IpAddress::getLocalAddress().value().toString() << gamePort;
+    packet << std::string(MAGIC) 
+           << sf::IpAddress::getLocalAddress().value().toString() 
+           << gamePort;
     socket.send(packet, sf::IpAddress::Broadcast, BROADCAST_PORT);
 }
 
@@ -47,4 +69,4 @@ void LobbyDiscovery::upsertHost(std::vector<HostEntry>& hosts, HostEntry& entry)
         }
     }
     hosts.push_back(entry);
-}*/
+}

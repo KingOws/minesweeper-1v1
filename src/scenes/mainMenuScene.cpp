@@ -1,7 +1,7 @@
-#include "lobbyScene.h"
+#include "mainMenuScene.h"
 #include <iostream>
 
-LobbyScene::LobbyScene() : textFields{sf::Text(font), sf::Text(font)} {
+MainMenuScene::MainMenuScene() : textFields{sf::Text(font), sf::Text(font)} {
     if (!font.openFromFile("../src/fonts/arial.ttf")) {
         std::cerr << "Error: could not load font" << std::endl;
     }
@@ -38,7 +38,7 @@ LobbyScene::LobbyScene() : textFields{sf::Text(font), sf::Text(font)} {
 }
 
 
-void LobbyScene::draw(sf::RenderWindow &window){
+void MainMenuScene::draw(sf::RenderWindow &window){
     for(sf::RectangleShape &rect : boxes){
         window.draw(rect);
     }
@@ -47,7 +47,7 @@ void LobbyScene::draw(sf::RenderWindow &window){
     }
 }
 
-SceneAction LobbyScene::handleLeftEvent(sf::Vector2f& mousePos) {
+SceneAction MainMenuScene::handleLeftEvent(sf::Vector2f& mousePos) {
     if (boxes[0].getGlobalBounds().contains(mousePos))
         return SceneAction::goToNetworking;
     if (boxes[1].getGlobalBounds().contains(mousePos))
@@ -55,11 +55,11 @@ SceneAction LobbyScene::handleLeftEvent(sf::Vector2f& mousePos) {
     return SceneAction::None;
 } 
 
-SceneAction LobbyScene::handleRightEvent(sf::Vector2f& mousePos) {
+SceneAction MainMenuScene::handleRightEvent(sf::Vector2f& mousePos) {
     return SceneAction::None;
 }
 
-LobbyScene::~LobbyScene(){}
+MainMenuScene::~MainMenuScene(){}
 
 
     

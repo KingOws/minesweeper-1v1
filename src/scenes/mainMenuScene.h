@@ -1,8 +1,9 @@
 #pragma once
 
 #include "IScene.h"
+#include "lobbydiscovery.h"
 
-class LobbyScene : public IScene{
+class MainMenuScene : public IScene{
     private:
     sf::RectangleShape boxes[2];
     sf::Font font;
@@ -10,8 +11,9 @@ class LobbyScene : public IScene{
     PlayerMode playermode;
 
     public:
-    LobbyScene();
-    virtual ~LobbyScene();
+    MainMenuScene();
+    MainMenuScene(std::string);
+    virtual ~MainMenuScene();
     virtual void draw(sf::RenderWindow &window);
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
     virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
