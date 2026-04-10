@@ -20,6 +20,14 @@ int main()
                 window.close();
             }
 
+            if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyPressed->code == sf::Keyboard::Key::A) {
+                    // A was pressed — trigger your autocomplete here
+                    if(GameScene* g = dynamic_cast<GameScene*>(sm.getScene())){
+                        g->handleDevWin();
+                    }
+                }
+            }
             if(event->is<sf::Event::MouseButtonPressed>()){
                 const sf::Event::MouseButtonPressed* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
                 if(mouseEvent->button == sf::Mouse::Button::Left){

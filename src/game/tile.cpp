@@ -49,7 +49,7 @@ void Tile::loadDefaultTexture() {
     sprite = sf::Sprite(defaultTexture);
 }
 
-void Tile::updateSprite(const SpriteManager& manager, bool reveal) {
+void Tile::updateSprite(const SpriteManager& manager, sf::Vector2f& offset, bool reveal) {
     int index = 0;
 
     // NOT OPENED - 0
@@ -79,6 +79,6 @@ void Tile::updateSprite(const SpriteManager& manager, bool reveal) {
 
     sprite.setTexture(manager.getTileSheet());
     sprite.setTextureRect(manager.getSprite(index)); 
-    sprite.setPosition({pos_x * size, pos_y * size});
+    sprite.setPosition({pos_x * size+offset.x, pos_y * size+offset.y});
     sprite.setScale({size/16, size/16});
 }

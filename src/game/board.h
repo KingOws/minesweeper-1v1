@@ -12,6 +12,7 @@ class Board{
         int numBombs;
         bool lost;
         bool won;
+        sf::Vector2f offset;
         std::vector<Tile*> bombs;
         Tile* tiles;
         SpriteManager* sm;
@@ -19,7 +20,7 @@ class Board{
     public:
         Board();
         ~Board();
-        Board(int r, int c, int b);
+        Board(int r, int c, int b, sf::Vector2f v);
 
 
         Tile* getTile(int x, int y) const {return &tiles[y*col+x];};

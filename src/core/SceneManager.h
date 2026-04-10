@@ -90,6 +90,10 @@ public:
             tempNext = new LobbyBrowsingScene();
             break;
 
+        case SceneAction::goToMainMenu:
+            tempNext = new MainMenuScene();
+            break;
+
         case SceneAction::Exit:
             // Handle exit if needed
             break;

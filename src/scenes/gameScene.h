@@ -17,4 +17,5 @@ class GameScene: public IScene{
     virtual void update();
 
     void checkGameWon();
+    virtual SceneAction handleDevWin();
 };

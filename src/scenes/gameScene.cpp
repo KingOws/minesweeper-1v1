@@ -9,7 +9,7 @@ GameScene::GameScene(Difficulty d){
         case Difficulty::hard:   r = 16; c = 30; b = 70; break;
     }
 
-    board = new Board(r, c, b);
+    board = new Board(r, c, b, {100.0,100.0});
     board->updateBoard(); 
 }
 
@@ -18,13 +18,13 @@ void GameScene::draw(sf::RenderWindow &window){
     board->drawBoard(window);
 }
 
-SceneAction GameScene::handleLeftEvent(sf::Vector2f& mousePos) {
+SceneAction GameScene::handleLeftEvent(sf::Vector2f &mousePos) {
     if (board == nullptr) {return SceneAction::Exit;};
     // 1. If the game is already over, the next click exits to menu
     if (board->getLost() || board->getWon()) {
         if (board->getLost()) std::cout << "[Final Result] Loss" << std::endl;
         if (board->getWon()) std::cout << "[Final Result] Win!" << std::endl;
-        return SceneAction::goToMenu; 
+        return SceneAction::goToMainMenu; 
     }
 
     // 2. Standard gameplay
@@ -37,7 +37,12 @@ SceneAction GameScene::handleLeftEvent(sf::Vector2f& mousePos) {
     return SceneAction::None;
 }
 
-SceneAction GameScene::handleRightEvent(sf::Vector2f& mousePos) {
+SceneAction GameScene::handleDevWin(){
+    board->setWon(true);
+    return SceneAction::None;
+}
+
+SceneAction GameScene::handleRightEvent(sf::Vector2f &mousePos) {
     if (board == nullptr) return SceneAction::goToMenu;
     board->placeFlag(board->handleMouse(mousePos));
     return SceneAction::None;

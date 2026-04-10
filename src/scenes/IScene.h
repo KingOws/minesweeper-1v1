@@ -4,7 +4,7 @@
 
 class SceneManager;
 
-enum class SceneAction{None, startGame, goToNetworking, goToMenu, startLobby, searchLobby, Exit};
+enum class SceneAction{None, startGame, goToMainMenu, goToNetworking, goToMenu, startLobby, searchLobby, Exit};
 enum class Difficulty {easy, medium, hard};
 enum class PlayerMode {single, multi};
 enum class NetworkingMode {hosting, joining};

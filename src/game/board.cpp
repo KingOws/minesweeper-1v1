@@ -13,11 +13,13 @@ Board::Board(){
     lost = false;
 }
 
-Board::Board(int r, int c, int b){
+Board::Board(int r, int c, int b, sf::Vector2f offset){
     row = r;
     col = c;
     numBombs = b;
     lost = false;
+    won = false;
+    this->offset = offset;
 
     tiles = new Tile[row * col];
     sm = new SpriteManager(0);    
@@ -33,7 +35,7 @@ Board::Board(int r, int c, int b){
 
             t->setPos_x(i);
             t->setPos_y(j);
-            t->updateSprite(*sm);
+            t->updateSprite(*sm, offset);
         }
     }
 }
@@ -68,7 +70,7 @@ void Board::updateBoard() {
 
             currentTile->setOpened(false);
             currentTile->setValue(bombs);
-            currentTile->updateSprite(*sm);
+            currentTile->updateSprite(*sm, offset);
         }
     }
 }
@@ -90,8 +92,8 @@ void Board::generateBombs() {
 }
 
 sf::Vector2i Board::handleMouse(sf::Vector2f mousePos) {
-    int x = mousePos.x/Tile::getSize();
-    int y = mousePos.y/Tile::getSize();
+    int x = (mousePos.x-offset.x)/Tile::getSize();
+    int y = (mousePos.y-offset.y)/Tile::getSize();
     return sf::Vector2i(x, y);
 }
 
@@ -104,7 +106,7 @@ void Board::placeFlag(sf::Vector2i mousePos){
     Tile* tile = getTile(x,y);
     if (tile->isOpened()) return;
     tile->setFlag(!tile->isFlagged());
-    tile->updateSprite(*sm);
+    tile->updateSprite(*sm, offset);
 }
 
 bool Board::revealTile(sf::Vector2i mousePos, bool clicked){
@@ -151,7 +153,7 @@ bool Board::revealTile(sf::Vector2i mousePos, bool clicked){
             revealTile(sf::Vector2i(tile->getPos_x(), tile->getPos_y()), false);
         }
     }
-    tile->updateSprite(*sm);
+    tile->updateSprite(*sm, offset);
     if (tile->isBomb()) {
         showBombs();
         return true;
@@ -181,7 +183,7 @@ void Board::showBombs() {
     for (Tile* bomb : bombs) {
         if (!bomb->isOpened()) {
             bomb->setOpened(true);
-            bomb->updateSprite(*sm, true);
+            bomb->updateSprite(*sm, offset,true);
         }
     }
 }
