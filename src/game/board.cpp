@@ -94,7 +94,7 @@ void Board::generateBombs() {
 sf::Vector2i Board::handleMouse(sf::Vector2f mousePos) {
     int x = (mousePos.x-offset.x)/Tile::getSize();
     int y = (mousePos.y-offset.y)/Tile::getSize();
-    return sf::Vector2i(x, y);
+    return sf::Vector2i(y,x);
 }
 
 void Board::placeFlag(sf::Vector2i mousePos){
@@ -169,7 +169,7 @@ void Board::getNeighbours(int x, int y, std::vector<Tile*>& neighbours) const {
 
             int nx = x + dx;
             int ny = y + dy;
-            if (!(nx >= 0 && nx < col && ny >= 0 && ny < row)) continue;
+            if (!(nx >= 0 && nx < row && ny >= 0 && ny < col)) continue;
 
             Tile* neighbour = getTile(nx, ny);
             if (neighbour != nullptr) {

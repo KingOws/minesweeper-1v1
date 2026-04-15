@@ -9,6 +9,7 @@
 
 class SceneManager {
 private:
+    sf::RenderWindow* window;
     IScene* currScene;
     IScene* nextScene; // Pointer to hold the scene we want to switch to
     bool shouldSwap;   // Flag to signal a swap is needed
@@ -55,7 +56,7 @@ public:
 
     IScene* getScene() { return currScene; }
 
-    void processAction(SceneAction action) {
+    void processAction(SceneAction action, sf::RenderWindow &window) {
         if (action == SceneAction::None) return;
 
         IScene* tempNext = nullptr;
@@ -63,7 +64,7 @@ public:
         switch (action) {
         case SceneAction::startGame:
             if (MenuScene* menu = dynamic_cast<MenuScene*>(currScene)) {
-                tempNext = new GameScene(menu->getDiff());
+                tempNext = new GameScene(menu->getDiff(), window);
                 std::cout << "[SceneManager] Starting New Game...\n";
             }
             break;
@@ -91,7 +92,7 @@ public:
             break;
 
         case SceneAction::goToMainMenu:
-            tempNext = new MainMenuScene();
+            tempNext = new MainMenuScene(window);
             break;
 
         case SceneAction::Exit:

@@ -23,7 +23,7 @@ class Board{
         Board(int r, int c, int b, sf::Vector2f v);
 
 
-        Tile* getTile(int x, int y) const {return &tiles[y*col+x];};
+        Tile* getTile(int x, int y) const {return &tiles[x*col+y];};
         int getSize() const {return row * col;};
         int getCol() const {return col;};
         int getRow() const {return row;};

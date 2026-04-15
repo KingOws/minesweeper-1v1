@@ -12,7 +12,7 @@ class MainMenuScene : public IScene{
 
     public:
     MainMenuScene();
-    MainMenuScene(std::string);
+    MainMenuScene(sf::RenderWindow &window);
     virtual ~MainMenuScene();
     virtual void draw(sf::RenderWindow &window);
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);

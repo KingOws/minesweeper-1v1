@@ -79,6 +79,6 @@ void Tile::updateSprite(const SpriteManager& manager, sf::Vector2f& offset, bool
 
     sprite.setTexture(manager.getTileSheet());
     sprite.setTextureRect(manager.getSprite(index)); 
-    sprite.setPosition({pos_x * size+offset.x, pos_y * size+offset.y});
+    sprite.setPosition({pos_y * size+offset.x, pos_x * size+offset.y});
     sprite.setScale({size/16, size/16});
 }

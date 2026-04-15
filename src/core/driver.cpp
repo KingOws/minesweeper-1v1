@@ -32,11 +32,11 @@ int main()
                 const sf::Event::MouseButtonPressed* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
                 if(mouseEvent->button == sf::Mouse::Button::Left){
                     sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
-                    sm.processAction(sm.getScene()->handleLeftEvent(mousePos));
+                    sm.processAction(sm.getScene()->handleLeftEvent(mousePos),window);
                 }
                 if(mouseEvent->button == sf::Mouse::Button::Right){
                     sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
-                    sm.processAction(sm.getScene()->handleRightEvent(mousePos));
+                    sm.processAction(sm.getScene()->handleRightEvent(mousePos),window);
                 }
             }
         }
