@@ -14,6 +14,7 @@ Board::Board(){
 }
 
 Board::Board(int r, int c, int b, sf::Vector2f offset){
+    numFlags = b;
     row = r;
     col = c;
     numBombs = b;
@@ -105,6 +106,11 @@ void Board::placeFlag(sf::Vector2i mousePos){
 
     Tile* tile = getTile(x,y);
     if (tile->isOpened()) return;
+
+    if(tile->isFlagged()) numFlags++;
+    else if(!tile->isFlagged()) numFlags--;
+
+    std::cout << numFlags;
     tile->setFlag(!tile->isFlagged());
     tile->updateSprite(*sm, offset);
 }

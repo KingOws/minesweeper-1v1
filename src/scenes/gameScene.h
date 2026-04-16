@@ -7,6 +7,11 @@ class GameScene: public IScene{
     private:
     Difficulty diff;
     Board* board;
+
+    sf::Clock gameClock;
+    int lastSecond = 0;
+    int time;
+    
     unsigned short tileSize;
     unsigned short col;
     unsigned short row;

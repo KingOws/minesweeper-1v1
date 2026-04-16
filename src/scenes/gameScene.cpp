@@ -3,6 +3,7 @@
 
 GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
     offset = {0.0,100.0};
+    gameClock.start();
 
     int r, c, b;
     switch (d) {
@@ -21,6 +22,8 @@ GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
     sf::Vector2f newSize = {col * tileSize + offset.x, row * tileSize + offset.y};
     window.setSize(sf::Vector2u(newSize));
     window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),newSize)));
+
+    
 }
 
 void GameScene::draw(sf::RenderWindow &window){
@@ -34,6 +37,7 @@ SceneAction GameScene::handleLeftEvent(sf::Vector2f &mousePos) {
     if (board->getLost() || board->getWon()) {
         if (board->getLost()) std::cout << "[Final Result] Loss" << std::endl;
         if (board->getWon()) std::cout << "[Final Result] Win!" << std::endl;
+        gameClock.stop();
         return SceneAction::goToMainMenu; 
     }
 
@@ -64,7 +68,10 @@ GameScene::~GameScene(){
 }
 
 void GameScene::update(){
-
+    time = gameClock.getElapsedTime().asSeconds();
+    if(time != lastSecond){
+        lastSecond = time;
+    }
 }
 
 

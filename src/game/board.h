@@ -7,9 +7,11 @@
 
 class Board{
     private:
-        int row;
-        int col;
-        int numBombs;
+        short row;
+        short col;
+        short numBombs;
+        short numFlags;
+        short counter;
         bool lost;
         bool won;
         sf::Vector2f offset;
