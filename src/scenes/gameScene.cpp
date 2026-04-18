@@ -8,30 +8,35 @@ GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
 
     int r, c, b;
     switch (d) {
-        case Difficulty::easy:   r = 10; c = 10; b = 10; break;
-        case Difficulty::medium: r = 16; c = 16; b = 40; break;
-        case Difficulty::hard:   r = 16; c = 30; b = 70; break;
+        case Difficulty::easy:   
+            r = 10; c = 10; b = 10; 
+            gameHeader = new GameHeader(b, {32,27},{210,27});
+            break;
+        case Difficulty::medium: 
+            r = 16; c = 16; b = 40; 
+            gameHeader = new GameHeader(b, {64,27},{370,27});
+            break;
+        case Difficulty::hard:   
+            r = 16; c = 30; b = 70; 
+            gameHeader = new GameHeader(b, {96,27},{786,27});
+            break;
     }
     board = new Board(r, c, b, offset);
     board->updateBoard(); 
-    gameHeader = new GameHeader(b);
 
-    tileSize = board->getTile(0,0)->getSize();
-    row = board->getRow();
-    col = board->getCol();
-
-
-    sf::Vector2f newSize = {col * tileSize + offset.x, row * tileSize + offset.y};
-    window.setSize(sf::Vector2u(newSize));
-    window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),newSize)));
-
-    
 }
 
 void GameScene::draw(sf::RenderWindow &window){
     gameHeader->draw(window);
     if (board == nullptr) return;
     board->drawBoard(window);
+
+    tileSize = board->getTile(0,0)->getSize();
+    row = board->getRow();
+    col = board->getCol();
+    sf::Vector2f newSize = {col * tileSize + offset.x, row * tileSize + offset.y};
+    window.setSize(sf::Vector2u(newSize));
+    window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),newSize)));
 }
 
 SceneAction GameScene::handleLeftEvent(sf::Vector2f &mousePos) {
@@ -48,6 +53,7 @@ SceneAction GameScene::handleLeftEvent(sf::Vector2f &mousePos) {
     if (board->revealTile(board->handleMouse(mousePos), true)) {
         board->setLost(true);
         std::cout << "BOOM!\n";
+        gameClock.stop();
     }
 
     if (!board->getLost()) checkGameWon();
@@ -68,6 +74,8 @@ SceneAction GameScene::handleRightEvent(sf::Vector2f &mousePos) {
 GameScene::~GameScene(){
     delete board;
     board = nullptr;
+    delete gameHeader;
+    gameHeader = nullptr;
 }
 
 void GameScene::update(){
@@ -75,7 +83,7 @@ void GameScene::update(){
     if(time != lastSecond){
         lastSecond = time;
     }
-    gameHeader->updateSprite(*sm, offset, time, board->getFlag());
+    gameHeader->updateSprite(*sm, time, board->getFlag());
 }
 
 void GameScene::checkGameWon() {

@@ -6,10 +6,12 @@
 #include "mainMenuScene.h"
 #include "lobbyBrowsingScene.h"
 #include <iostream>
+#include <stack>
 
 class SceneManager {
 private:
     sf::RenderWindow* window;
+    std::stack<IScene*> history;
     IScene* currScene;
     IScene* nextScene; // Pointer to hold the scene we want to switch to
     bool shouldSwap;   // Flag to signal a swap is needed
@@ -38,11 +40,11 @@ public:
     // Call this at the end of your main loop in driver.cpp
     void updateAndSwap() {
         // Run the current scene's internal logic
+        if(!currScene) return;
         currScene->update();
 
         // Perform the swap only when it is safe (not inside an event handler)
-        if (shouldSwap) {
-            delete currScene;
+        if(shouldSwap){
             currScene = nextScene;
             nextScene = nullptr;
             shouldSwap = false;
@@ -58,7 +60,6 @@ public:
 
     void processAction(SceneAction action, sf::RenderWindow &window) {
         if (action == SceneAction::None) return;
-
         IScene* tempNext = nullptr;
 
         switch (action) {
@@ -95,6 +96,13 @@ public:
             tempNext = new MainMenuScene(window);
             break;
 
+        case SceneAction::goBack:
+            if(!history.empty()){
+                tempNext = history.top();
+                history.pop();
+            }
+            break;
+
         case SceneAction::Exit:
             // Handle exit if needed
             break;
@@ -104,6 +112,9 @@ public:
         }
 
         if (tempNext) {
+            if(action != SceneAction::goBack){
+                history.push(currScene);
+            }
             nextScene = tempNext;
             shouldSwap = true;
         }

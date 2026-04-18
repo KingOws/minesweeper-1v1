@@ -36,8 +36,6 @@ MainMenuScene::MainMenuScene(sf::RenderWindow &window) : textFields{sf::Text(fon
         text.setPosition({rect.getPosition().x + rect.getSize().x / 2.f,
                         rect.getPosition().y + rect.getSize().y / 2.f});
     }
-    window.setSize({800,600});
-    window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),{800,600})));
 }
 
 MainMenuScene::MainMenuScene() : textFields{sf::Text(font), sf::Text(font)} {
@@ -84,6 +82,9 @@ void MainMenuScene::draw(sf::RenderWindow &window){
     for(sf::Text &text : textFields){
        window.draw(text);
     }
+
+    window.setSize({800,600});
+    window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),{800,600})));
 }
 
 SceneAction MainMenuScene::handleLeftEvent(sf::Vector2f& mousePos) {

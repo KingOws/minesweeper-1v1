@@ -46,6 +46,9 @@ void LobbyBrowsingScene::draw(sf::RenderWindow &window) {
         window.draw(rect);
     for (sf::Text &text : textFields)
         window.draw(text);
+
+    window.setSize({800,600});
+    window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),{800,600})));
 }
 
 SceneAction LobbyBrowsingScene::handleLeftEvent(sf::Vector2f &mousePos) {

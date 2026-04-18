@@ -15,6 +15,8 @@ class GameHeader{
     //logic
     int time;
     int numFlags;
+    sf::Vector2f clockOffset;
+    sf::Vector2f mineOffset;
 
     public:
     GameHeader() : time(0), numFlags(0){
@@ -28,7 +30,7 @@ class GameHeader{
         }
     }
 
-    GameHeader(int f) : time(0), numFlags(f){
+    GameHeader(int f, sf::Vector2f c, sf::Vector2f m) : time(0), numFlags(f), clockOffset(c), mineOffset(m){
         if (!digitTexture.loadFromFile("../src/images/missing_image.png")) {
             std::cerr << "Failed to load missing_image.png\n";
         }
@@ -39,19 +41,19 @@ class GameHeader{
         }
     }
 
-    void updateSprite(const SpriteManager& manager, sf::Vector2f& offset, int timeVal, int flagVal) {
-        short numTime[3] = {(timeVal/100)%10,(timeVal/10)%10,(timeVal/1)%10};
-        short numFlags[3] = {(flagVal/100)%10,(flagVal/10)%10,(flagVal/1)%10};
+    void updateSprite(const SpriteManager& manager, const int timeVal, const int flagVal) {
+        int numTime[3] = {(timeVal/100)%10,(timeVal/10)%10,(timeVal/1)%10};
+        int numFlags[3] = {(flagVal/100)%10,(flagVal/10)%10,(flagVal/1)%10};
 
         for(int i = 0; i < 3; i++){
             clockDigits.at(i).setTexture(manager.getTileSheet());
             clockDigits.at(i).setTextureRect(manager.getDigitSprite(numTime[i]));
-            clockDigits.at(i).setPosition({0+i*26,0});
+            clockDigits.at(i).setPosition({clockOffset.x+i*26.0f,clockOffset.y});
             clockDigits.at(i).setScale({2,2});
 
             mineDigits.at(i).setTexture(manager.getTileSheet());
             mineDigits.at(i).setTextureRect(manager.getDigitSprite(numFlags[i]));
-            mineDigits.at(i).setPosition({100+i*26,0});
+            mineDigits.at(i).setPosition({mineOffset.x+i*26.0f,mineOffset.y});
             mineDigits.at(i).setScale({2,2});
         }
     }

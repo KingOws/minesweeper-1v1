@@ -56,6 +56,9 @@ void MenuScene::draw(sf::RenderWindow &window){
     for(sf::Text &text : textFields){
        window.draw(text);
     }
+
+    window.setSize({800,600});
+    window.setView(sf::View(sf::FloatRect(sf::Vector2f(0, 0),{800,600})));
 }
 
 SceneAction MenuScene::handleLeftEvent(sf::Vector2f &mousePos){

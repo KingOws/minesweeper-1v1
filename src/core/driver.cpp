@@ -27,6 +27,9 @@ int main()
                         g->handleDevWin();
                     }
                 }
+                if(keyPressed->code == sf::Keyboard::Key::Escape){
+                    sm.processAction(sm.getScene()->handleEsc(), window);
+                }
             }
             if(event->is<sf::Event::MouseButtonPressed>()){
                 const sf::Event::MouseButtonPressed* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
