@@ -2,11 +2,15 @@
 
 #include "IScene.h"
 #include "board.h"
+#include "gameHeader.h"
+
 
 class GameScene: public IScene{
     private:
     Difficulty diff;
     Board* board;
+    GameHeader* gameHeader;
+    SpriteManager* sm;
 
     sf::Clock gameClock;
     int lastSecond = 0;

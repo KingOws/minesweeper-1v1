@@ -9,6 +9,7 @@ class SpriteManager {
     int tileSize;
     int number_of_tiles;
     std::vector<sf::IntRect> sprites;
+    std::vector<sf::IntRect> digitSprites;
 
     public:
     SpriteManager(int);
@@ -16,6 +17,7 @@ class SpriteManager {
 
     const sf::Texture& getTileSheet() const;
     const sf::IntRect& getSprite(int index) const;
+    const sf::IntRect& getDigitSprite(int digit) const;
 
     // NOT OPENED
     // 8 -> 1

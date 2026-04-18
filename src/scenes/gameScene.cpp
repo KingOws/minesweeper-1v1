@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
+    sm = new SpriteManager(8);
     offset = {0.0,100.0};
     gameClock.start();
 
@@ -13,6 +14,7 @@ GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
     }
     board = new Board(r, c, b, offset);
     board->updateBoard(); 
+    gameHeader = new GameHeader(b);
 
     tileSize = board->getTile(0,0)->getSize();
     row = board->getRow();
@@ -27,6 +29,7 @@ GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
 }
 
 void GameScene::draw(sf::RenderWindow &window){
+    gameHeader->draw(window);
     if (board == nullptr) return;
     board->drawBoard(window);
 }
@@ -72,8 +75,8 @@ void GameScene::update(){
     if(time != lastSecond){
         lastSecond = time;
     }
+    gameHeader->updateSprite(*sm, offset, time, board->getFlag());
 }
-
 
 void GameScene::checkGameWon() {
     if (board == nullptr) return;

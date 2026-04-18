@@ -32,6 +32,7 @@ class Board{
         bool getLost() const {return lost;};
         void setLost(bool l) {lost = l;};
         bool getWon() const {return won;};
+        int getFlag() const {return numFlags;};
         void setWon(bool w) {won = w;};
         void updateBoard();
         void generateBombs();
