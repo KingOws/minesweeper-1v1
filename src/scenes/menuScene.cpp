@@ -2,7 +2,7 @@
 #include <iostream>
 #include "lobbydiscovery.h"
 
-MenuScene::MenuScene(std::string s): MenuScene(){
+MenuScene::MenuScene(std::string s) : MenuScene(){
     if(s == "hosting"){
         ld = LobbyDiscovery::createHost(6767);
         std::cout << "hosting...";
