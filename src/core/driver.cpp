@@ -45,7 +45,6 @@ int main()
         }
 
         sm.updateAndSwap();
-
         window.clear({255, 255, 255, 255});
         sm.displayScene(window);
         window.display();

@@ -12,11 +12,9 @@ class MenuScene: public IScene{
     sf::Font font;
     sf::Text textFields[3];
     Difficulty difficulty;
-    std::unique_ptr<LobbyDiscovery> ld;
 
     public:
     MenuScene();
-    MenuScene(std::string);
     ~MenuScene();
     virtual void draw(sf::RenderWindow &window); 
     virtual void update() {return;};

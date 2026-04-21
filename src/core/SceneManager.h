@@ -5,6 +5,7 @@
 #include "netScene.h"
 #include "mainMenuScene.h"
 #include "lobbyBrowsingScene.h"
+#include "lobbyCreationScene.h"
 #include <iostream>
 #include <stack>
 
@@ -85,7 +86,7 @@ public:
             break;
 
         case SceneAction::startLobby:
-            tempNext = new MenuScene("hosting"); 
+            tempNext = new LobbyCreationScene(); 
             break;
 
         case SceneAction::searchLobby:

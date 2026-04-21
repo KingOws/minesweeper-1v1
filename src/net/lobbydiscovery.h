@@ -3,32 +3,25 @@
 #include <memory>
 #include <string>
 #include <vector>
-
-struct HostEntry {
-    std::string ip;
-    unsigned short gamePort;
-    sf::Clock lastSeen;
-};
+#include <iostream>
+#include "IScene.h"
 
 class LobbyDiscovery {
-public:
-    static std::unique_ptr<LobbyDiscovery> createHost(unsigned short gamePort);
-    static std::unique_ptr<LobbyDiscovery> createJoiner();
-    void tick(std::vector<HostEntry>& hosts);
+    private:
+        sf::TcpSocket socket;
+        sf::Packet packet;
+        GameInfo& gameInfo;
+        sf::IpAddress serverAddress{192,168,1,80};
+        bool connected;
 
-private:
-    enum class Role { Host, Joiner };
-    LobbyDiscovery(Role role, unsigned short gamePort = 0);
+    public:
+        LobbyDiscovery(GameInfo&);
+        void updatePackets();
+        void sendPackets();
+        void receivePackets();
 
-    void broadcastPresence();
-    bool pollForHosts(HostEntry& out);
-    void pruneStaleHosts(std::vector<HostEntry>& hosts);
-    void upsertHost(std::vector<HostEntry>& hosts, HostEntry& entry);
+        void getGameInfo();
 
-    static constexpr unsigned short BROADCAST_PORT = 6767;
-    static constexpr const char* MAGIC = "MINESWEEPER_HOST";
 
-    sf::UdpSocket socket;
-    Role role;
-    unsigned short gamePort;
+   
 };

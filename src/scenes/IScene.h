@@ -9,6 +9,12 @@ enum class Difficulty {easy, medium, hard};
 enum class PlayerMode {single, multi};
 enum class NetworkingMode {hosting, joining};
 
+struct GameInfo{
+    bool hosting = false;
+    bool gameCreated = false;
+    int playerCount = 0;
+};
+
 class IScene{
     private:
     public:
