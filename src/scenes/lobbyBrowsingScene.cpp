@@ -13,7 +13,10 @@ LobbyBrowsingScene::LobbyBrowsingScene() {
 LobbyBrowsingScene::~LobbyBrowsingScene() {}
 
 void LobbyBrowsingScene::update() {
-
+    if(ld){
+        ld->sendPackets();
+        ld->receivePackets();
+    }
 }
 
 void LobbyBrowsingScene::draw(sf::RenderWindow &window) {

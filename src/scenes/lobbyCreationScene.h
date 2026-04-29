@@ -6,7 +6,7 @@ class LobbyDiscovery;
 class LobbyCreationScene : public MenuScene{
     private:
         std::unique_ptr<LobbyDiscovery> ld;
-        GameInfo hostingInfo;
+        LobbyInfo hostingInfo;
 
     public:
         LobbyCreationScene();

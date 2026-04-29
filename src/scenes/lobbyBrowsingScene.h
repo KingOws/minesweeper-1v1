@@ -7,7 +7,7 @@
 class LobbyBrowsingScene : public IScene {
 private:
     std::unique_ptr<LobbyDiscovery> ld;
-    GameInfo joiningInfo;
+    LobbyInfo joiningInfo;
 
     sf::Font font;
     std::vector<sf::RectangleShape> boxes;

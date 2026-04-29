@@ -1,7 +1,6 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
-
+#include "pactor.h"
 class SceneManager;
 
 enum class SceneAction{None, goToMainMenu, startGame, goToNetworking, goToMenu, startLobby, searchLobby, goBack, Exit};
@@ -9,10 +8,13 @@ enum class Difficulty {easy, medium, hard};
 enum class PlayerMode {single, multi};
 enum class NetworkingMode {hosting, joining};
 
-struct GameInfo{
+struct LobbyInfo{
     bool hosting = false;
     bool gameCreated = false;
-    int playerCount = 0;
+    int lobbyId = 0;
+    int currentPlayers = 0;
+    int maxPlayers = 2;
+    pactor<int> availableGames; 
 };
 
 class IScene{

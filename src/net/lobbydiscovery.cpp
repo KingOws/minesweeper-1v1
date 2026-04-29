@@ -1,6 +1,6 @@
 #include "lobbydiscovery.h"
 
-LobbyDiscovery::LobbyDiscovery(GameInfo &g) : gameInfo(g), connected(false){
+LobbyDiscovery::LobbyDiscovery(LobbyInfo &g) : lobbyInfo(g), connected(false){
     std::cout << "Attempting to Connect: ";
     socket.setBlocking(true);
     auto status = socket.connect(serverAddress, 55001);
@@ -11,6 +11,7 @@ LobbyDiscovery::LobbyDiscovery(GameInfo &g) : gameInfo(g), connected(false){
         std::cout << "Connected!" << std::endl;
         updatePackets();
         sendPackets();
+        receivePackets();
     }else
         std::cerr << "Connection failed or timed out." << std::endl;
 
@@ -29,10 +30,17 @@ void LobbyDiscovery::sendPackets(){
 }
 
 void LobbyDiscovery::receivePackets(){
+    if(packet.getDataSize() == 0) return;
 
+    sf::Socket::Status status = socket.receive(packet);
+    if(status == sf::Socket::Status::Done){
+        std::cout << "Package Received!" << std::endl;
+    }
+    packet >> lobbyInfo.hosting >> lobbyInfo.gameCreated >> lobbyInfo.lobbyId >> lobbyInfo.currentPlayers >> lobbyInfo.maxPlayers >> lobbyInfo.availableGames;
+    packet.clear();
 }
 
 void LobbyDiscovery::updatePackets(){
     packet.clear();
-    packet << gameInfo.hosting << gameInfo.gameCreated << gameInfo.playerCount;
+    packet << lobbyInfo.hosting << lobbyInfo.gameCreated << lobbyInfo.lobbyId << lobbyInfo.currentPlayers << lobbyInfo.maxPlayers << lobbyInfo.availableGames;
 }

@@ -10,12 +10,12 @@ class LobbyDiscovery {
     private:
         sf::TcpSocket socket;
         sf::Packet packet;
-        GameInfo& gameInfo;
+        LobbyInfo& lobbyInfo;
         sf::IpAddress serverAddress{192,168,1,80};
         bool connected;
 
     public:
-        LobbyDiscovery(GameInfo&);
+        LobbyDiscovery(LobbyInfo&);
         void updatePackets();
         void sendPackets();
         void receivePackets();
