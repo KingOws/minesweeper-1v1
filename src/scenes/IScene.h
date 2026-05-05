@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "pactor.h"
+#include <iostream>
 class SceneManager;
 
 enum class SceneAction{None, goToMainMenu, startGame, goToNetworking, goToMenu, startLobby, searchLobby, goBack, Exit};
@@ -10,11 +11,23 @@ enum class NetworkingMode {hosting, joining};
 
 struct LobbyInfo{
     bool hosting = false;
+    bool inGame = false;
     bool gameCreated = false;
-    int lobbyId = 0;
+    int lobbyId = -1;
+    int playerId = -1;
     int currentPlayers = 0;
     int maxPlayers = 2;
     pactor<int> availableGames; 
+
+    friend sf::Packet& operator<<(sf::Packet& p, LobbyInfo& l){
+        p << l.hosting << l.inGame << l.gameCreated << l.lobbyId << l.playerId << l.currentPlayers << l.maxPlayers << l.availableGames;
+        return p;
+    }
+
+    friend sf::Packet& operator>>(sf::Packet& p, LobbyInfo& l){
+        p >> l.hosting >> l.inGame >> l.gameCreated >> l.lobbyId >> l.playerId >> l.currentPlayers >> l.maxPlayers >> l.availableGames;
+        return p;
+    }
 };
 
 class IScene{
