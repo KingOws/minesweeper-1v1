@@ -31,6 +31,7 @@ SceneAction LobbyBrowsingScene::handleRightEvent(sf::Vector2f &mousePos) {
 
 void LobbyBrowsingScene::update(){
     if(ld){
+        ld->updatePackets();
         ld->sendPackets();
         ld->receivePackets();
     }
