@@ -110,7 +110,6 @@ void Board::placeFlag(sf::Vector2i mousePos){
     if(tile->isFlagged()) numFlags++;
     else if(!tile->isFlagged()) numFlags--;
 
-    std::cout << numFlags;
     tile->setFlag(!tile->isFlagged());
     tile->updateSprite(*sm, offset);
 }
