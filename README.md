@@ -28,7 +28,7 @@ A twist on classic Minesweeper. Two players race to clear their board, first to 
 ## Screenshots
 
 | Easy | Medium | Hard |
-|-----------|-----------|
+|-----------|-----------|-----------|
 | ![easy](screenshots/easy.png) | ![medium](screenshots/medium.png) | ![hard](screenshots/hard.png) |
 
 ---
