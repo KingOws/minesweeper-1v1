@@ -36,6 +36,8 @@ void LobbyBrowsingScene::update(){
         ld->receivePackets();
     }
     
+    boxes.clear();
+    textFields.clear();
     boxes.resize(joiningInfo.availableGames.size());
     float posx = 0, posy = 0;
 

@@ -18,6 +18,7 @@ LobbyDiscovery::LobbyDiscovery(LobbyInfo &g) : lobbyInfo(g), connected(false){
 }
 
 void LobbyDiscovery::sendPackets(){
+    socket.setBlocking(false);
     if(packet.getDataSize() == 0) return;
 
     sf::Socket::Status status;
@@ -34,12 +35,13 @@ void LobbyDiscovery::sendPackets(){
 }
 
 void LobbyDiscovery::receivePackets(){
+    socket.setBlocking(false);
     sf::Socket::Status status = socket.receive(packet);
     if(status == sf::Socket::Status::Done){
         std::cout << "Package Received!" << std::endl;
+        packet >> lobbyInfo;
+        packet.clear();
     }
-    packet >> lobbyInfo;
-    packet.clear();
 }
 
 void LobbyDiscovery::updatePackets(){

@@ -8,6 +8,7 @@ LobbyCreationScene::LobbyCreationScene() : MenuScene(){
 
 void LobbyCreationScene::update(){
     if(ld){
+        ld->updatePackets();
         ld->sendPackets();
         ld->receivePackets();
     }
