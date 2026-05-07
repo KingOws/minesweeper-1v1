@@ -39,7 +39,10 @@ struct LobbyInfo{
 class IScene{
     private:
     public:
-        IScene() {};
+        IScene() {
+            if (!font.openFromFile("../fonts/arial.ttf"))
+                std::cerr << "Error: could not load font" << std::endl;
+        };
         virtual ~IScene() = default;
         virtual void draw(sf::RenderWindow &window) =0;
         virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos) = 0;
@@ -48,4 +51,5 @@ class IScene{
             return SceneAction::goBack;
         }
         virtual void update() = 0;
+        sf::Font font;
 };

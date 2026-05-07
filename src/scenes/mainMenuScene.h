@@ -6,7 +6,6 @@
 class MainMenuScene : public IScene{
     private:
     sf::RectangleShape boxes[2];
-    sf::Font font;
     sf::Text textFields[2];
     PlayerMode playermode;
 

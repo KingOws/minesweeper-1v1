@@ -3,7 +3,7 @@
 #include <iostream>
 
 SpriteManager::SpriteManager(int t) {
-    if (!tileSheet.loadFromFile("../src/images/minesweeper_spritesheet.png")) {
+    if (!tileSheet.loadFromFile("../images/minesweeper_spritesheet.png")) {
         std::cerr << "Failed to load tilesheet.png\n";
     }
 

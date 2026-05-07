@@ -4,7 +4,7 @@
 int main()
 {   
     sf::Image icon;
-    if (!icon.loadFromFile("../src/images/icon.png")) {
+    if (!icon.loadFromFile("../images/icon.png")) {
         std::cerr << "Failed to load icon.png" << std::endl;
         return -1;
     }

@@ -9,7 +9,6 @@ private:
     std::unique_ptr<LobbyDiscovery> ld;
     LobbyInfo joiningInfo;
 
-    sf::Font font;
     std::vector<sf::RectangleShape> boxes;
     std::vector<sf::Text> textFields;
 

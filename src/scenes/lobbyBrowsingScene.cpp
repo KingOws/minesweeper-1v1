@@ -2,9 +2,6 @@
 #include <iostream>
 
 LobbyBrowsingScene::LobbyBrowsingScene() {
-    if (!font.openFromFile("../src/fonts/arial.ttf"))
-        std::cerr << "Error: could not load font" << std::endl;
-
     joiningInfo.hosting = false;
     ld = std::make_unique<LobbyDiscovery>(joiningInfo);
     ld->findServer();

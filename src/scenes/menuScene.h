@@ -9,7 +9,6 @@ class SceneManager;
 class MenuScene: public IScene{
     private:
     sf::RectangleShape boxes[3];
-    sf::Font font;
     sf::Text textFields[3];
     Difficulty difficulty;
 

@@ -5,13 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# 1. Grab all source files
+# 1. Grab all source files (excluding build directory)
 file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+list(FILTER SOURCES EXCLUDE REGEX "${CMAKE_CURRENT_BINARY_DIR}/.*")
 
 # 2. Create the executable
 add_executable(minesweeper ${SOURCES})
 
-# 3. Include paths — missing PUBLIC/PRIVATE keyword
+# 3. Include paths
 target_include_directories(minesweeper PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/core"

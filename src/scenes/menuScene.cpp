@@ -3,10 +3,6 @@
 #include "lobbydiscovery.h"
 
 MenuScene::MenuScene() : textFields{sf::Text(font), sf::Text(font), sf::Text(font)} {
-    if (!font.openFromFile("../src/fonts/arial.ttf")) {
-        std::cerr << "Error: could not load font" << std::endl;
-    }
-
         float posx = 100, posy = 150;
         for (int i = 0; i < 3; i++) {
             sf::RectangleShape& rect = boxes[i];

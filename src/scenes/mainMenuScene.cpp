@@ -3,10 +3,6 @@
 
 
 MainMenuScene::MainMenuScene(sf::RenderWindow &window) : textFields{sf::Text(font), sf::Text(font)} {
-    if (!font.openFromFile("../src/fonts/arial.ttf")) {
-        std::cerr << "Error: could not load font" << std::endl;
-    }
-
     float posx = 100, posy = 150;
     
     for (int i = 0; i < 2; i++) {
@@ -39,7 +35,7 @@ MainMenuScene::MainMenuScene(sf::RenderWindow &window) : textFields{sf::Text(fon
 }
 
 MainMenuScene::MainMenuScene() : textFields{sf::Text(font), sf::Text(font)} {
-    if (!font.openFromFile("../src/fonts/arial.ttf")) {
+    if (!font.openFromFile("../fonts/arial.ttf")) {
         std::cerr << "Error: could not load font" << std::endl;
     }
 
