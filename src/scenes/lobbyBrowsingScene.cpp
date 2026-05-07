@@ -7,6 +7,7 @@ LobbyBrowsingScene::LobbyBrowsingScene() {
 
     joiningInfo.hosting = false;
     ld = std::make_unique<LobbyDiscovery>(joiningInfo);
+    ld->findServer();
     std::cout << "joining...";
 }
 
@@ -30,6 +31,7 @@ SceneAction LobbyBrowsingScene::handleRightEvent(sf::Vector2f &mousePos) {
 }
 
 void LobbyBrowsingScene::update(){
+    std::cout << joiningInfo.availableGames;
     if(ld){
         ld->updatePackets();
         ld->sendPackets();
@@ -60,5 +62,6 @@ void LobbyBrowsingScene::update(){
             textBounds.position.y  + textBounds.size.y / 2.f});
         text.setPosition({rect.getPosition().x + rect.getSize().x / 2.f,
             rect.getPosition().y + rect.getSize().y / 2.f});
+        textFields.push_back(text);
     }
 }

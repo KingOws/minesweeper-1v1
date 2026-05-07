@@ -6,18 +6,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # 1. Grab all source files
-file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 # 2. Create the executable
 add_executable(minesweeper ${SOURCES})
 
 # 3. Include paths — missing PUBLIC/PRIVATE keyword
 target_include_directories(minesweeper PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/src"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/core"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/game"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/net"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/scenes"
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/core"
+    "${CMAKE_CURRENT_SOURCE_DIR}/game"
+    "${CMAKE_CURRENT_SOURCE_DIR}/net"
+    "${CMAKE_CURRENT_SOURCE_DIR}/scenes"
 )
 
 # 4. Find and link SFML

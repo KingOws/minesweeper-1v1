@@ -28,6 +28,12 @@ struct LobbyInfo{
         p >> l.hosting >> l.inGame >> l.gameCreated >> l.lobbyId >> l.playerId >> l.currentPlayers >> l.maxPlayers >> l.availableGames;
         return p;
     }
+
+    friend std::ostream& operator<<(std::ostream& p, LobbyInfo& l){
+        p << "Hosting: " << l.hosting << " In Game: " << l.inGame << " Game created: " << l.gameCreated << " Lobby Id: " <<l.lobbyId << " Player Id: " << l.playerId << " Current Players: " << l.currentPlayers << " Max Players: " << l.maxPlayers << " \nAvailable Games:\n " << l.availableGames;
+        return p;
+    }
+
 };
 
 class IScene{
