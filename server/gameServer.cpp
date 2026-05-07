@@ -99,7 +99,7 @@ void GameServer::receivePackets(){
             else if(status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error){
                 std::cout << "Error receiving packet" << std::endl;
                 selector.remove(*((*it)->socket));
-                pruneStaleGame((*it).get());
+                pruneStaleGame(*(*it));
                 it = players.erase(it);
 
             //skip it socket if anythign else
