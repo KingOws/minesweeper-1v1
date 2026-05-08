@@ -48,27 +48,15 @@ A twist on classic Minesweeper. Two players race to clear their board, first to 
 - CMake ≥ 3.16
 - SFML installed on your system
 - A C++ Compiler
+- Python (Or figuring out the cmake install on your own)
 
 ### Build
 
 ```bash
 git clone https://github.com/KingOws/minesweeper-1v1
 cd minesweeper-1v1
-mkdir build && cd build
-```
-WINDOWS
-```bash
-cmake ..
-cmake --build .
-./minesweeper.exe
-```
-
-MACOS
-```bash
-mkdir build && cd build
-cmake ..
-make
-./minesweeper
+py build.py
+py run.py src
 ```
 
 ---
