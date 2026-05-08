@@ -38,7 +38,7 @@ template<>
 class pactor<uint32_t> : public std::vector<uint32_t>{
     public:
         friend sf::Packet& operator<<(sf::Packet& packet, pactor& p){
-            packet << p.size();
+            packet << static_cast<uint32_t>(p.size());
             for(auto it = p.begin(); it != p.end(); it++)
                 packet << *it;
             return packet;
