@@ -20,7 +20,7 @@ class GameHeader{
 
     public:
     GameHeader() : time(0), numFlags(0){
-        if (!digitTexture.loadFromFile("../src/images/missing_image.png")) {
+        if (!digitTexture.loadFromFile("../images/missing_image.png")) {
             std::cerr << "Failed to load missing_image.png\n";
         }
 
@@ -31,7 +31,7 @@ class GameHeader{
     }
 
     GameHeader(int f, sf::Vector2f c, sf::Vector2f m) : time(0), numFlags(f), clockOffset(c), mineOffset(m){
-        if (!digitTexture.loadFromFile("../src/images/missing_image.png")) {
+        if (!digitTexture.loadFromFile("../images/missing_image.png")) {
             std::cerr << "Failed to load missing_image.png\n";
         }
 

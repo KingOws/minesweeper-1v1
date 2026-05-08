@@ -41,7 +41,7 @@ void Tile::drawTile(sf::RenderWindow& window) {
 
 void Tile::loadDefaultTexture() {
     if (!loaded) {
-        if (!defaultTexture.loadFromFile("../src/images/missing_image.png")) {
+        if (!defaultTexture.loadFromFile("../images/missing_image.png")) {
             std::cerr << "Failed to load missing_image.png\n";
         }
         loaded = true;
