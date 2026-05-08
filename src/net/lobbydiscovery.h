@@ -31,6 +31,8 @@ class LobbyDiscovery {
         void startServer();
         void findServer();
 
+        bool isConnected() const {return connected;};
+
         void getGameInfo();
 
 

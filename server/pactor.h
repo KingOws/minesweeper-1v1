@@ -1,14 +1,12 @@
 #pragma once
 #include <vector>
-#include "SFML/Graphics.hpp"
-
-class Game;
+#include "SFML/Network.hpp"
 
 template <typename T>
 class pactor : public std::vector<T>{
     public:
         friend sf::Packet& operator<<(sf::Packet& packet, pactor& p){
-            int size = p.size();
+            uint32_t size = p.size();
             packet << size;
             for(typename pactor<T>::iterator it = p.begin(); it != p.end(); it++){
                 packet << *it;
@@ -17,7 +15,7 @@ class pactor : public std::vector<T>{
         }
 
         friend sf::Packet& operator>>(sf::Packet& packet, pactor& p){
-            int size;
+            uint32_t size;
             if(!(packet >> size)) return packet;
             p.resize(size);
             for(typename pactor<T>::iterator it = p.begin(); it != p.end(); it++)
@@ -25,21 +23,22 @@ class pactor : public std::vector<T>{
             return packet;
         }
 
-        pactor<int>& operator=(const std::vector<std::unique_ptr<Game>>& vec);
-
-        ~pactor(){}
-        pactor(){}
+        friend std::ostream& operator<<(std::ostream& os, pactor& p){
+            for(typename pactor<T>::iterator it = p.begin(); it != p.end(); it++){
+                os << *it;
+            }
+            return os;
+        }
 
     private:
 };
 
-// Full specialization for int
-template <>
-class pactor<int> : public std::vector<int>{
+
+template<>
+class pactor<uint32_t> : public std::vector<uint32_t>{
     public:
         friend sf::Packet& operator<<(sf::Packet& packet, pactor& p){
-            int size = p.size();
-            packet << size;
+            packet << p.size();
             for(auto it = p.begin(); it != p.end(); it++)
                 packet << *it;
             return packet;
@@ -54,6 +53,13 @@ class pactor<int> : public std::vector<int>{
             return packet;
         }
 
-        ~pactor(){}
-        pactor(){}
+        friend std::ostream& operator<<(std::ostream& os, pactor& p){
+            os << "Size is: ";
+            os << p.size();
+            os << std::endl;
+            for(auto it = p.begin(); it != p.end(); it++)
+                os << *it << " ";
+            os << std::endl;
+            return os;
+        }
 };

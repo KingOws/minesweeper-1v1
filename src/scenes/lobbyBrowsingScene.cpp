@@ -28,8 +28,8 @@ SceneAction LobbyBrowsingScene::handleRightEvent(sf::Vector2f &mousePos) {
 }
 
 void LobbyBrowsingScene::update(){
-    std::cout << joiningInfo.availableGames;
-    if(ld){
+    if(ld->isConnected()){
+        std::cout << joiningInfo.availableGames;
         ld->updatePackets();
         ld->sendPackets();
         ld->receivePackets();

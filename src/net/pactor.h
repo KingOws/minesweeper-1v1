@@ -6,7 +6,7 @@ template <typename T>
 class pactor : public std::vector<T>{
     public:
         friend sf::Packet& operator<<(sf::Packet& packet, pactor& p){
-            int size = p.size();
+            uint32_t size = p.size();
             packet << size;
             for(typename pactor<T>::iterator it = p.begin(); it != p.end(); it++){
                 packet << *it;
@@ -15,7 +15,7 @@ class pactor : public std::vector<T>{
         }
 
         friend sf::Packet& operator>>(sf::Packet& packet, pactor& p){
-            int size;
+            uint32_t size;
             if(!(packet >> size)) return packet;
             p.resize(size);
             for(typename pactor<T>::iterator it = p.begin(); it != p.end(); it++)
@@ -35,7 +35,7 @@ class pactor : public std::vector<T>{
 
 
 template<>
-class pactor<int> : public std::vector<int>{
+class pactor<uint32_t> : public std::vector<uint32_t>{
     public:
         friend sf::Packet& operator<<(sf::Packet& packet, pactor& p){
             packet << p.size();

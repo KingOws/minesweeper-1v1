@@ -2,7 +2,7 @@
 
 
 // Find Connections???
-LobbyDiscovery::LobbyDiscovery(LobbyInfo &g) : lobbyInfo(g), connected(false){
+LobbyDiscovery::LobbyDiscovery(LobbyInfo &g) : lobbyInfo(g), connected(false), hosting(false){
     std::optional<sf::IpAddress> localIp = sf::IpAddress::getLocalAddress();
     if (localIp.has_value()) {
         std::cout << "My IP: " << localIp->toString() << std::endl;
