@@ -62,6 +62,7 @@ public:
     void processAction(SceneAction action, sf::RenderWindow &window) {
         if (action == SceneAction::None) return;
         IScene* tempNext = nullptr;
+        GameScene* game;
 
         switch (action) {
         case SceneAction::startGame:
@@ -98,6 +99,10 @@ public:
             break;
 
         case SceneAction::goBack:
+            game = dynamic_cast<GameScene*>(currScene);
+            if (game != nullptr) {
+                break;
+            }
             if(!history.empty()){
                 tempNext = history.top();
                 history.pop();
@@ -114,7 +119,11 @@ public:
 
         if (tempNext) {
             if(action != SceneAction::goBack){
-                history.push(currScene);
+                // this wastes memory btw
+                game = dynamic_cast<GameScene*>(currScene);
+                if (game == nullptr) {
+                    history.push(currScene);
+                }
             }
             nextScene = tempNext;
             shouldSwap = true;
