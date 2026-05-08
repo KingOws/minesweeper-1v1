@@ -1,11 +1,14 @@
-import subprocess, sys
+import subprocess, sys, platform
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 
+IS_WINDOWS = platform.system() == "Windows"
+EXE = ".exe" if IS_WINDOWS else ""
+
 EXECUTABLES = {
-    "src":    ROOT / "src"    / "build" / "minesweeper.exe",
-    "server": ROOT / "server" / "build" / "minesweeper_server.exe",
+    "src":    ROOT / "src"    / "build" / f"minesweeper{EXE}",
+    "server": ROOT / "server" / "build" / f"minesweeper_server{EXE}",
 }
 
 if len(sys.argv) < 2 or sys.argv[1] not in EXECUTABLES:
