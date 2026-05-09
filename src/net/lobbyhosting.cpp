@@ -51,7 +51,7 @@ LobbyHosting::~LobbyHosting() {
 void LobbyHosting::sendPackets(){
     for (const std::unique_ptr<sf::TcpSocket>& client: clientList) {
         client->setBlocking(false);
-        if(packet.getDataSize() == 0) return;
+        if(packet.getDataSize() == 0) continue;
 
         sf::Socket::Status status;
         do {

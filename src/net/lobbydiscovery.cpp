@@ -26,12 +26,11 @@ void LobbyDiscovery::establishConnection() {
 
         sf::TcpSocket tempSocket;
         tempSocket.setBlocking(true);
-        std::cout << "Trying IP: " << ip << '\n';
 
         if (tempSocket.connect(*resolved, PORT, sf::milliseconds(50)) == sf::Socket::Status::Done) {
             std::cout << "Found host at: " << ip << '\n';
             socket->setBlocking(false);
-            socket->connect(*resolved, PORT);
+            *socket = std::move(tempSocket);
             connected = true;
             break;
         }
