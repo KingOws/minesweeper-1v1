@@ -13,24 +13,23 @@ struct LobbyInfo{
     bool hosting = false;
     bool inGame = false;
     bool gameCreated = false;
-    int lobbyId = -1;
     int playerId = -1;
     int currentPlayers = 0;
     int maxPlayers = 2;
     pactor<int> availableGames = pactor<int>{}; 
 
     friend sf::Packet& operator<<(sf::Packet& p, LobbyInfo& l){
-        p << l.hosting << l.inGame << l.gameCreated << l.lobbyId << l.playerId << l.currentPlayers << l.maxPlayers << l.availableGames;
+        p << l.hosting << l.inGame << l.gameCreated << l.playerId << l.currentPlayers << l.maxPlayers << l.availableGames;
         return p;
     }
 
     friend sf::Packet& operator>>(sf::Packet& p, LobbyInfo& l){
-        p >> l.hosting >> l.inGame >> l.gameCreated >> l.lobbyId >> l.playerId >> l.currentPlayers >> l.maxPlayers >> l.availableGames;
+        p >> l.hosting >> l.inGame >> l.gameCreated >> l.playerId >> l.currentPlayers >> l.maxPlayers >> l.availableGames;
         return p;
     }
 
     friend std::ostream& operator<<(std::ostream& p, LobbyInfo& l){
-        p << "Hosting: " << l.hosting << " In Game: " << l.inGame << " Game created: " << l.gameCreated << " Lobby Id: " <<l.lobbyId << " Player Id: " << l.playerId << " Current Players: " << l.currentPlayers << " Max Players: " << l.maxPlayers << " \nAvailable Games:\n " << l.availableGames;
+        p << "Hosting: " << l.hosting << " In Game: " << l.inGame << " Game created: " << l.gameCreated  << " Player Id: " << l.playerId << " Current Players: " << l.currentPlayers << " Max Players: " << l.maxPlayers << " \nAvailable Games:\n " << l.availableGames;
         return p;
     }
 

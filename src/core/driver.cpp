@@ -85,15 +85,14 @@ void networkRun(SceneManager& sm, std::atomic<bool>& serverRunning) {
 
 
             //does normal packet stuff
-            lobManager->updatePackets();
-            lobManager->receivePackets();
-            lobManager->sendPackets();
+            // lobManager->updatePackets();
+            // lobManager->receivePackets();
+            // lobManager->sendPackets();
         }
 
         //apparently has to sleep if not ur computer will blow up
         sf::sleep(sf::milliseconds(10));
     }
 }
-
 
     
