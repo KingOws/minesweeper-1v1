@@ -68,11 +68,18 @@ void LobbyHosting::sendPackets(){
 }
 
 void LobbyHosting::receivePackets(){
-    for (const std::unique_ptr<sf::TcpSocket>& client: clientList) {
-        client->setBlocking(false);
-        sf::Socket::Status status = socket->receive(packet);
-        if(status == sf::Socket::Status::Done){
-            std::cout << "Received from " << client->getRemoteAddress()->toString() << '\n';
+    for (std::vector<std::unique_ptr<sf::TcpSocket>>::iterator it = clientList.begin(); it != clientList.end(); ) {
+        sf::Socket::Status status = (*it)->receive(packet);
+
+        if (status == sf::Socket::Status::Done) {
+            std::cout << "Received from " << (*it)->getRemoteAddress()->toString() << '\n';
+            // handle packet...
+            ++it;
+        } else if (status == sf::Socket::Status::Disconnected) {
+            std::cout << "Client disconnected: " << (*it)->getRemoteAddress()->toString() << '\n';
+            it = clientList.erase(it);
+        } else {
+            ++it;
         }
     }
 }
