@@ -17,7 +17,7 @@ void LobbyDiscovery::establishConnection() {
     std::string base = playerAddress.toString();
     std::string subnet = base.substr(0, base.rfind('.') + 1);
 
-    for (int i = 1; i < 255; i++) {
+    for (int i = 0; i <= 255; i++) {
         std::string ip = subnet + std::to_string(i);
         if (ip == base) continue;
 
