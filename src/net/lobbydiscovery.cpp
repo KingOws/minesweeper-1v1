@@ -1,44 +1,44 @@
 #include "lobbydiscovery.h"
 #include <atomic>
 
-LobbyDiscovery::LobbyDiscovery() {
+LobbyDiscovery::LobbyDiscovery() : Lobby() {
+    if(udpListener.bind(DiscoveryPort) == sf::Socket::Status::Done)
+        std::cout << "Joining is listening on UDP" << std::endl;
     hosting = false;
     connected = false;
-
-    std::optional<sf::IpAddress> localIp = sf::IpAddress::getLocalAddress();
-    if (localIp.has_value()) {
-        std::cout << "My IP: " << localIp->toString() << std::endl;
-        playerAddress = *localIp;
-    } else return;
 }
 
 void LobbyDiscovery::establishConnection(std::atomic<bool>&  running) {
-    if (isPlayerIPEmpty() || connected) return;
+    if (isPlayerIPEmpty() || tcpLinkReady) return;
 
-    std::string base = playerAddress.toString();
-    std::string subnet = base.substr(0, base.rfind('.') + 1);
+    if(!connected){
+        this->findServer();
+    }else{
 
-    for (int i = 0; (i <= 255 && running.load()); i++) {
-        std::string ip = subnet + std::to_string(i);
-        if (ip == base) continue;
-
-        std::optional<sf::IpAddress>  resolved = sf::IpAddress::resolve(ip);
-        if (!resolved.has_value()) continue; 
-
-        sf::TcpSocket tempSocket;
-        tempSocket.setBlocking(true);
-
-        if (tempSocket.connect(*resolved, PORT, sf::milliseconds(50)) == sf::Socket::Status::Done) {
-            std::cout << "Found host at: " << ip << '\n';
-            socket->setBlocking(false);
-            *socket = std::move(tempSocket);
-            connected = true;
-            break;
+        sf::Socket::Status status = socket->connect(remoteAddress, GAME_PORT, sf::seconds(2));
+        if(status == sf::Socket::Status::Done){
+            std::cout << "Succesfully connected to minesweeper!\n";
+            tcpLinkReady = true;
+        }else if(status == sf::Socket::Status::Error){
+            std::cout << "Failed to connected to host!\n";
+            connected = false;
         }
     }
+}
 
-    if (!connected)
-        std::cerr << "No Host\n";
+void LobbyDiscovery::findServer(){
+    sf::Packet receiver;
+    std::optional<sf::IpAddress> senderIp;
+    unsigned short senderPort;
+
+    //receive modifies the remoteAddress to the address of whomever sent the packet
+    if(udpListener.receive(receiver, senderIp, senderPort) == sf::Socket::Status::Done){
+        if(senderIp){
+            std::cout << "Obtained Server Address: " << senderIp->toString() << std::endl;
+            this->remoteAddress = *senderIp;
+            this->connected = true;
+        }
+    }
 }
 
 

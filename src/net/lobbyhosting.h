@@ -6,13 +6,14 @@ class LobbyHosting : public Lobby{
         sf::SocketSelector selector;
         sf::TcpListener listener;
         std::vector<std::unique_ptr<sf::TcpSocket>> clientList;
+        sf::Clock broadcastTimer;
     public:
         LobbyHosting();
         ~LobbyHosting();
         virtual void establishConnection(std::atomic<bool>&  running);
         void shutdown();
 
-        // void runServer();
+        void runServer();
         virtual void sendPackets() override;
         virtual void receivePackets() override;
         // virtual void updatePackets() override;

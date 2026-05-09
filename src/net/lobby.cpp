@@ -2,19 +2,20 @@
 
 //Set Ip Address
 Lobby::Lobby() {
+    udpListener.setBlocking(false);
+    socket->setBlocking(false);
     std::optional<sf::IpAddress> localIp = sf::IpAddress::getLocalAddress();
     if (localIp.has_value()) {
         std::cout << "My IP: " << localIp->toString() << std::endl;
         playerAddress = *localIp;
     }else{
-        std::cout << "You are not connected to the internet!";
+        std::cout << "You are not connected to the internet";
     }
 }
 
 
 //  Send Packets for the Game
 void Lobby::sendPackets(){
-    socket->setBlocking(false);
     if(packet.getDataSize() == 0) return;
 
     sf::Socket::Status status;
@@ -32,7 +33,6 @@ void Lobby::sendPackets(){
 
 //  Receive Packets for the Game
 void Lobby::receivePackets(){
-    socket->setBlocking(false);
     sf::Socket::Status status = socket->receive(packet);
     if(status == sf::Socket::Status::Done){
         std::cout << "Package Received!" << std::endl;
@@ -48,9 +48,9 @@ void Lobby::updatePackets(){
 }
 
 void Lobby::disconnect() {
-    if (connected) {
+    if (tcpLinkReady) {
         socket->disconnect();
-        connected = false;
+        tcpLinkReady = false;
         hosting = false;
         remoteAddress = sf::IpAddress::Any;
         packet.clear();

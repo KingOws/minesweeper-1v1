@@ -79,7 +79,6 @@ void networkRun(SceneManager& sm, std::atomic<bool>& serverRunning) {
             lobManager->establishConnection(serverRunning);
 
             //does normal packet stuff
-
             lobManager->updatePackets();
             lobManager->receivePackets();
             lobManager->sendPackets();

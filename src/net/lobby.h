@@ -9,14 +9,19 @@
 
 class Lobby {
     protected:
-        int PORT = 55001;
+        unsigned short GAME_PORT = 55001;
         std::unique_ptr<sf::TcpSocket> socket = std::make_unique<sf::TcpSocket>();
+
+        unsigned short DiscoveryPort = 49152;
+        sf::UdpSocket udpListener;
+
         sf::Packet packet;
         LobbyInfo lobbyInfo;
         sf::IpAddress playerAddress{192,168,0,0};
-        sf::IpAddress remoteAddress{192,168,0,0};
+        sf::IpAddress remoteAddress{192,168,0,255};
         bool hosting;
         bool connected;
+        bool tcpLinkReady;
 
     public:
         Lobby();

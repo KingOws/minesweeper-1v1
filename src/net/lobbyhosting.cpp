@@ -1,19 +1,41 @@
 #include "lobbyhosting.h"
 
 
-LobbyHosting::LobbyHosting(){
+LobbyHosting::LobbyHosting() : Lobby(){
+    broadcastTimer.start();
     hosting = true;
     lobbyInfo.currentPlayers = 1;
     lobbyInfo.playerId = 1;
     
-    listener.listen(PORT);
-    selector.add(listener);
+    sf::Socket::Status status = listener.listen(GAME_PORT);
+    if(status == sf::Socket::Status::Done){
+        std::cout << "Host is listening on port " << GAME_PORT << std::endl;
+        selector.add(listener);
+    }
+    else if(status == sf::Socket::Status::Error)
+        std::cout << "Error adding listener to gameport";
 }
 
 void LobbyHosting::establishConnection(std::atomic<bool>&  running){
+    //if (isPlayerIPEmpty()) return;
+
+    this->runServer();
+
+    if(lobbyInfo.currentPlayers < lobbyInfo.maxPlayers){
+        sf::Packet beacon;
+        //sends a beacon signal using broadcast address basically letting everyone know what the host address is
+        if(broadcastTimer.getElapsedTime() > sf::seconds(1.0f)){
+            udpListener.send(beacon, sf::IpAddress::Broadcast, DiscoveryPort);
+            broadcastTimer.restart();
+        }
+    }   
+}
+
+void LobbyHosting::runServer(){
     if(selector.wait(sf::milliseconds(10))){
         if(selector.isReady(listener)){
             auto newSocket = std::make_unique<sf::TcpSocket>();
+
             if(listener.accept(*newSocket) == sf::Socket::Status::Done){
                 if(lobbyInfo.currentPlayers >= lobbyInfo.maxPlayers || lobbyInfo.inGame){
                     std::cout << "Lobby full or in game, rejecting client" << std::endl;
@@ -24,6 +46,7 @@ void LobbyHosting::establishConnection(std::atomic<bool>&  running){
                     selector.add(*newSocket);
                     clientList.push_back(std::move(newSocket));
                     lobbyInfo.currentPlayers++;
+                    tcpLinkReady = true;
                 }
             }
         }
