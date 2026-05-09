@@ -47,3 +47,32 @@ void LobbyHosting::shutdown(){
 LobbyHosting::~LobbyHosting() {
     if (hosting) shutdown();
 }
+
+void LobbyHosting::sendPackets(){
+    for (const std::unique_ptr<sf::TcpSocket>& client: clientList) {
+        client->setBlocking(false);
+        if(packet.getDataSize() == 0) return;
+
+        sf::Socket::Status status;
+        do {
+            status = client->send(packet);
+        } while(status == sf::Socket::Status::NotReady);
+        
+        if(status == sf::Socket::Status::Done){
+            std::cout << "Package Sent to " << client->getRemoteAddress()->toString() << "!\n";
+            packet.clear();
+        } else if(status == sf::Socket::Status::Error){
+            std::cerr << "Big error\n";
+        }
+    }
+}
+
+void LobbyHosting::receivePackets(){
+    for (const std::unique_ptr<sf::TcpSocket>& client: clientList) {
+        client->setBlocking(false);
+        sf::Socket::Status status = socket->receive(packet);
+        if(status == sf::Socket::Status::Done){
+            std::cout << "Received from " << client->getRemoteAddress()->toString() << '\n';
+        }
+    }
+}

@@ -13,6 +13,7 @@ class LobbyHosting : public Lobby{
         void shutdown();
 
         // void runServer();
-        // void virtual sendPackets();
-        // void virtual receivePackets();
+        virtual void sendPackets() override;
+        virtual void receivePackets() override;
+        // virtual void updatePackets() override;
 };

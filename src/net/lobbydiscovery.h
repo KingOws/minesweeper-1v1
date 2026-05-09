@@ -9,6 +9,7 @@ class LobbyDiscovery : public Lobby{
         void virtual establishConnection();
 
         //void findServer();
-        // void virtual sendPackets();
-        // void virtual receivePackets();
+        // void virtual sendPackets() override;
+        // void virtual receivePackets() override;
+        // virtual void updatePackets() override;
 };
