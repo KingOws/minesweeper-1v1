@@ -12,7 +12,7 @@ LobbyDiscovery::LobbyDiscovery() {
 }
 
 void LobbyDiscovery::establishConnection() {
-    if (isPlayerIPEmpty()) return;
+    if (isPlayerIPEmpty() || connected) return;
 
     std::string base = playerAddress.toString();
     std::string subnet = base.substr(0, base.rfind('.') + 1);
