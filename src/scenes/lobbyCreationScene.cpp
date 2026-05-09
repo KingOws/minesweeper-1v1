@@ -1,14 +1,14 @@
 #include "lobbycreationScene.h"
 
 
-LobbyCreationScene::LobbyCreationScene() : MenuScene(){
+LobbyCreationScene::LobbyCreationScene(LobbyInfo& g) : MenuScene(), hostingInfo(g){
     hostingInfo.hosting = true;
-    ld = std::make_unique<LobbyDiscovery>(hostingInfo);
-    ld->startServer();
+    std::cout << "hosting" << std::endl;
 }
 
-void LobbyCreationScene::update(){
+void LobbyCreationScene::updateNet(){
     if(ld){
+        ld->runServer();
         ld->updatePackets();
         ld->sendPackets();
         ld->receivePackets();

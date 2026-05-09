@@ -1,10 +1,8 @@
 #include "lobbybrowsingscene.h"
 #include <iostream>
 
-LobbyBrowsingScene::LobbyBrowsingScene() {
+LobbyBrowsingScene::LobbyBrowsingScene(LobbyInfo& g) : joiningInfo(g) {
     joiningInfo.hosting = false;
-    ld = std::make_unique<LobbyDiscovery>(joiningInfo);
-    ld->findServer();
     std::cout << "joining...";
 }
 
@@ -27,14 +25,7 @@ SceneAction LobbyBrowsingScene::handleRightEvent(sf::Vector2f &mousePos) {
     return SceneAction::None;
 }
 
-void LobbyBrowsingScene::update(){
-    if(ld->isConnected()){
-        std::cout << joiningInfo.availableGames;
-        ld->updatePackets();
-        ld->sendPackets();
-        ld->receivePackets();
-    }
-    
+void LobbyBrowsingScene::update(){    
     boxes.clear();
     textFields.clear();
     boxes.resize(joiningInfo.availableGames.size());

@@ -5,7 +5,7 @@ ROOT = Path(__file__).parent
 
 def build(folder):
     cwd = ROOT / folder
-    subprocess.run(["cmake", "-G", "Ninja", "-B", "build"], check=True, cwd=cwd)
+    subprocess.run(["cmake", "-G", "Ninja", "-B", "build", "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"], check=True, cwd=cwd)
     subprocess.run(["cmake", "--build", "build"],            check=True, cwd=cwd)
 
 def clean():

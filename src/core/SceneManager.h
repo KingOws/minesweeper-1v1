@@ -4,6 +4,9 @@
 #include "gameScene.h"
 #include "netScene.h"
 #include "mainMenuScene.h"
+#include "lobby.h"
+#include "lobbydiscovery.h"
+#include "lobbyhosting.h"
 #include "lobbyBrowsingScene.h"
 #include "lobbyCreationScene.h"
 #include <iostream>
@@ -16,6 +19,7 @@ private:
     IScene* currScene;
     IScene* nextScene; // Pointer to hold the scene we want to switch to
     bool shouldSwap;   // Flag to signal a swap is needed
+    std::shared_ptr<Lobby> lobbyManager;
 
     // Helper to print results if we are leaving a GameScene
     void checkGameResults() {
@@ -38,12 +42,14 @@ public:
         if (nextScene) delete nextScene;
     }
 
+    void setLobbyManager(std::shared_ptr<Lobby> lob){lobbyManager = lob;}
+    std::shared_ptr<Lobby> getLobbyManager(){return lobbyManager;}
+
     // Call this at the end of your main loop in driver.cpp
     void updateAndSwap() {
         // Run the current scene's internal logic
         if(!currScene) return;
         currScene->update();
-
         // Perform the swap only when it is safe (not inside an event handler)
         if(shouldSwap){
             currScene = nextScene;
@@ -87,11 +93,15 @@ public:
             break;
 
         case SceneAction::startLobby:
-            tempNext = new LobbyCreationScene(); 
+            lobbyManager = std::make_shared<LobbyHosting>();
+            tempNext = new LobbyCreationScene(lobbyManager->getGameInfo());
+
             break;
 
         case SceneAction::searchLobby:
-            tempNext = new LobbyBrowsingScene();
+            lobbyManager = std::make_shared<LobbyDiscovery>();
+            tempNext = new LobbyBrowsingScene(lobbyManager->getGameInfo());
+
             break;
 
         case SceneAction::goToMainMenu:

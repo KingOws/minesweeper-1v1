@@ -1,16 +1,16 @@
 #pragma once
 #include "menuScene.h"
-
-class LobbyDiscovery;
+#include "lobbyhosting.h"
 
 class LobbyCreationScene : public MenuScene{
     private:
-        std::unique_ptr<LobbyDiscovery> ld;
-        LobbyInfo hostingInfo;
+        std::unique_ptr<LobbyHosting> ld;
+        LobbyInfo& hostingInfo;
 
     public:
-        LobbyCreationScene();
+        LobbyCreationScene(LobbyInfo& g);
         ~LobbyCreationScene();
-        virtual void update();
+        void updateNet();
 
+        std::unique_ptr<LobbyHosting> getLobbyHosting(){return std::move(ld);};
 };

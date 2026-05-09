@@ -17,7 +17,7 @@ struct LobbyInfo{
     int playerId = -1;
     int currentPlayers = 0;
     int maxPlayers = 2;
-    pactor<int> availableGames; 
+    pactor<int> availableGames = pactor<int>{}; 
 
     friend sf::Packet& operator<<(sf::Packet& p, LobbyInfo& l){
         p << l.hosting << l.inGame << l.gameCreated << l.lobbyId << l.playerId << l.currentPlayers << l.maxPlayers << l.availableGames;

@@ -7,16 +7,19 @@
 class LobbyBrowsingScene : public IScene {
 private:
     std::unique_ptr<LobbyDiscovery> ld;
-    LobbyInfo joiningInfo;
+    LobbyInfo& joiningInfo;
 
     std::vector<sf::RectangleShape> boxes;
     std::vector<sf::Text> textFields;
 
 public:
-    LobbyBrowsingScene();
+    LobbyBrowsingScene(LobbyInfo&);
     ~LobbyBrowsingScene();
     virtual void draw(sf::RenderWindow &window);
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
     virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update();
+    void updateNet();
+
+    std::unique_ptr<LobbyDiscovery> getLobbyDiscovery(){return std::move(ld);};
 };

@@ -1,5 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "SceneManager.h"
+#include <thread>
+#include <atomic>
+
+void gameRun(sf::RenderWindow&, SceneManager&);
+void networkRun(SceneManager&, std::atomic<bool>&);
 
 int main()
 {   
@@ -13,6 +18,18 @@ int main()
     window.setIcon(icon);
     SceneManager sm;
 
+    std::atomic<bool> serverRunning{true};
+    //you have to manually pass by reference for some reason
+    std::thread t1(gameRun, std::ref(window), std::ref(sm));
+    std::thread t2(networkRun, std::ref(sm), std::ref(serverRunning));
+
+    t1.join();
+    serverRunning = false;
+    t2.join();
+    return 0;
+}
+
+void gameRun(sf::RenderWindow& window, SceneManager& sm){
     while (window.isOpen()){
         while (auto event = window.pollEvent()){
             const sf::Event& e = *event;
@@ -49,7 +66,33 @@ int main()
         sm.displayScene(window);
         window.display();
     }
-    return 0;
 }
+
+void networkRun(SceneManager& sm, std::atomic<bool>& serverRunning) {
+    // permaruns
+    while (serverRunning) { 
+        //checks if a lobby Manager object has been created
+        std::shared_ptr<Lobby> lobManager = sm.getLobbyManager();
+        if(lobManager){
+
+            //checks if we're hosting; if we are run ur server whiteboy
+            if(LobbyHosting* lobbyHostingManager = dynamic_cast<LobbyHosting*>(lobManager.get()))
+                lobbyHostingManager->runServer();
+            //checks if we're joing; if we are joing find server
+            else if(LobbyDiscovery* lobbyDiscoveryManager = dynamic_cast<LobbyDiscovery*>(lobManager.get()))
+                lobbyDiscoveryManager->findServer();
+
+
+            //does normal packet stuff
+            lobManager->updatePackets();
+            lobManager->receivePackets();
+            lobManager->sendPackets();
+        }
+
+        //apparently has to sleep if not ur computer will blow up
+        sf::sleep(sf::milliseconds(10));
+    }
+}
+
 
     
