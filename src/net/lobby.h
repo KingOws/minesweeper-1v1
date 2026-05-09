@@ -10,7 +10,7 @@
 class Lobby {
     protected:
         int PORT = 55001;
-        std::unique_ptr<sf::TcpSocket> socket;
+        std::unique_ptr<sf::TcpSocket> socket = std::make_unique<sf::TcpSocket>();
         sf::Packet packet;
         LobbyInfo lobbyInfo;
         sf::IpAddress playerAddress{192,168,0,0};
@@ -21,6 +21,8 @@ class Lobby {
     public:
         Lobby();
         ~Lobby();
+
+        bool isPlayerIPEmpty() {if (playerAddress == sf::IpAddress{192,168,0,0}) return true; return false;};
         
         virtual void disconnect();
         virtual void updatePackets();

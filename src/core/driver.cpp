@@ -81,13 +81,14 @@ void networkRun(SceneManager& sm, std::atomic<bool>& serverRunning) {
                 lobbyHostingManager->runServer();
             //checks if we're joing; if we are joing find server
             else if(LobbyDiscovery* lobbyDiscoveryManager = dynamic_cast<LobbyDiscovery*>(lobManager.get()))
-                lobbyDiscoveryManager->findServer();
+                if (!lobbyDiscoveryManager->isConnected())
+                    lobbyDiscoveryManager->findServer();
 
 
             //does normal packet stuff
-            // lobManager->updatePackets();
-            // lobManager->receivePackets();
-            // lobManager->sendPackets();
+            lobManager->updatePackets();
+            lobManager->receivePackets();
+            lobManager->sendPackets();
         }
 
         //apparently has to sleep if not ur computer will blow up

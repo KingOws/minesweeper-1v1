@@ -3,7 +3,6 @@
 
 class LobbyDiscovery : public Lobby{
     private:
-        bool scanned = false;
     public:
         LobbyDiscovery();
         ~LobbyDiscovery();
