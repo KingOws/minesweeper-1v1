@@ -76,7 +76,7 @@ void networkRun(SceneManager& sm, std::atomic<bool>& serverRunning) {
         std::shared_ptr<Lobby> lobManager = sm.getLobbyManager();
         if(lobManager){
             //polymorphism so no dynamic casting needed cuz apparenlty its inedfificnet
-            lobManager->establishConnection();
+            lobManager->establishConnection(serverRunning);
 
             //does normal packet stuff
 

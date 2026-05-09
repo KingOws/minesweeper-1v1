@@ -6,7 +6,7 @@ class LobbyDiscovery : public Lobby{
     public:
         LobbyDiscovery();
         ~LobbyDiscovery();
-        void virtual establishConnection();
+        void virtual establishConnection(std::atomic<bool>&  running);
 
         //void findServer();
         // void virtual sendPackets() override;

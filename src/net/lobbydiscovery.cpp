@@ -1,4 +1,5 @@
 #include "lobbydiscovery.h"
+#include <atomic>
 
 LobbyDiscovery::LobbyDiscovery() {
     hosting = false;
@@ -11,13 +12,13 @@ LobbyDiscovery::LobbyDiscovery() {
     } else return;
 }
 
-void LobbyDiscovery::establishConnection() {
+void LobbyDiscovery::establishConnection(std::atomic<bool>&  running) {
     if (isPlayerIPEmpty() || connected) return;
 
     std::string base = playerAddress.toString();
     std::string subnet = base.substr(0, base.rfind('.') + 1);
 
-    for (int i = 0; i <= 255; i++) {
+    for (int i = 0; (i <= 255 && running.load()); i++) {
         std::string ip = subnet + std::to_string(i);
         if (ip == base) continue;
 

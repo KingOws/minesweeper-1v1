@@ -10,7 +10,7 @@ LobbyHosting::LobbyHosting(){
     selector.add(listener);
 }
 
-void LobbyHosting::establishConnection(){
+void LobbyHosting::establishConnection(std::atomic<bool>&  running){
     if(selector.wait(sf::milliseconds(10))){
         if(selector.isReady(listener)){
             auto newSocket = std::make_unique<sf::TcpSocket>();

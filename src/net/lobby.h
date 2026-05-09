@@ -24,7 +24,7 @@ class Lobby {
 
         bool isPlayerIPEmpty() {if (playerAddress == sf::IpAddress{192,168,0,0}) return true; return false;};
         
-        virtual void establishConnection() {};
+        virtual void establishConnection(std::atomic<bool>&  running) {};
         virtual void disconnect();
         virtual void updatePackets();
         virtual void sendPackets();

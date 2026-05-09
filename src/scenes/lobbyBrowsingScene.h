@@ -9,8 +9,12 @@ private:
     std::unique_ptr<LobbyDiscovery> ld;
     LobbyInfo& joiningInfo;
 
-    std::vector<sf::RectangleShape> boxes;
-    std::vector<sf::Text> textFields;
+        sf::Text infoLabels[3];
+        sf::RectangleShape buttons[1];
+        sf::Text buttonTexts[1];
+
+        void updateInfoText();
+
 
 public:
     LobbyBrowsingScene(LobbyInfo&);

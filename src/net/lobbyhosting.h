@@ -9,7 +9,7 @@ class LobbyHosting : public Lobby{
     public:
         LobbyHosting();
         ~LobbyHosting();
-        virtual void establishConnection();
+        virtual void establishConnection(std::atomic<bool>&  running);
         void shutdown();
 
         // void runServer();
