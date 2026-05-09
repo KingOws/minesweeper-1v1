@@ -70,9 +70,10 @@ void LobbyCreationScene::draw(sf::RenderWindow& window) {
 SceneAction LobbyCreationScene::handleLeftEvent(sf::Vector2f& mousePos) {
     if (buttons[0].getGlobalBounds().contains(mousePos))
         return SceneAction::goToMenu;
-    else if (buttons[1].getGlobalBounds().contains(mousePos))
+    else if (buttons[1].getGlobalBounds().contains(mousePos)) {
         if (ld) ld->shutdown();
         return SceneAction::goToMainMenu;
+    }
     return SceneAction::None;
 }
 
