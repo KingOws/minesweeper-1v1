@@ -69,13 +69,19 @@ void LobbyHosting::sendPackets(){
 
 void LobbyHosting::receivePackets(){
     for (std::vector<std::unique_ptr<sf::TcpSocket>>::iterator it = clientList.begin(); it != clientList.end(); ) {
+
+        if (!selector.isReady(**it)) {
+            ++it;
+            continue;
+        }
+
         sf::Socket::Status status = (*it)->receive(packet);
 
         if (status == sf::Socket::Status::Done) {
             std::cout << "Received from " << (*it)->getRemoteAddress()->toString() << '\n';
             // handle packet...
             ++it;
-        } else if (status == sf::Socket::Status::Disconnected) {
+        } else if (status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error) {
             lobbyInfo.currentPlayers--;
             std::cout << "Client disconnected: " << (*it)->getRemoteAddress()->toString() << '\n';
             it = clientList.erase(it);
