@@ -13,7 +13,7 @@ def copy_dlls(build_folder):
 
 def build(folder):
     cwd = ROOT / folder
-    subprocess.run(["cmake", "-G", "Ninja", "-B", "build", "-DCMAKE_PREFIX_PATH=C:/SFML-3.0.2"], check=True, cwd=cwd)
+    subprocess.run(["cmake", "-G", "Ninja", "-B", "build"], check=True, cwd=cwd)
     subprocess.run(["cmake", "--build", "build"], check=True, cwd=cwd)
     copy_dlls(folder)
 
