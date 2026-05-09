@@ -11,6 +11,6 @@ class LobbyHosting : public Lobby{
         ~LobbyHosting();
         void runServer();
 
-        void virtual sendPackets();
-        void virtual receivePackets();
+        // void virtual sendPackets();
+        // void virtual receivePackets();
 };

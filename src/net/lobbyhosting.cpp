@@ -10,12 +10,9 @@ LobbyHosting::LobbyHosting(){
 }
 
 void LobbyHosting::runServer(){
-    hosting = true;
-    while(hosting){
-        if(selector.wait()){
-            if(selector.isReady(listener)){
+    if(selector.wait(sf::milliseconds(10))){
+        if(selector.isReady(listener)){
 
-            }
         }
     }
 }

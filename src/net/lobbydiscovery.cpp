@@ -5,6 +5,9 @@ LobbyDiscovery::LobbyDiscovery() {
 }
 
 void LobbyDiscovery::findServer() {
+    if (scanned) return;
+    scanned = true;
+    
     std::optional<sf::IpAddress> localIp = sf::IpAddress::getLocalAddress();
     if (localIp.has_value()) {
         std::cout << "My IP: " << localIp->toString() << std::endl;

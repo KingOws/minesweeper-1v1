@@ -16,14 +16,15 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode({800, 600}), "Minesweeper Client");
     window.setIcon(icon);
+
     SceneManager sm;
 
     std::atomic<bool> serverRunning{true};
-    //you have to manually pass by reference for some reason
-    std::thread t1(gameRun, std::ref(window), std::ref(sm));
+    
     std::thread t2(networkRun, std::ref(sm), std::ref(serverRunning));
 
-    t1.join();
+    gameRun(window, sm);
+
     serverRunning = false;
     t2.join();
     return 0;
