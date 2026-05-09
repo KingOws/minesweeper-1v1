@@ -76,6 +76,7 @@ void LobbyHosting::receivePackets(){
             // handle packet...
             ++it;
         } else if (status == sf::Socket::Status::Disconnected) {
+            lobbyInfo.currentPlayers--;
             std::cout << "Client disconnected: " << (*it)->getRemoteAddress()->toString() << '\n';
             it = clientList.erase(it);
         } else {
