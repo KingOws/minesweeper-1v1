@@ -75,15 +75,8 @@ void networkRun(SceneManager& sm, std::atomic<bool>& serverRunning) {
         //checks if a lobby Manager object has been created
         std::shared_ptr<Lobby> lobManager = sm.getLobbyManager();
         if(lobManager){
-
-            //checks if we're hosting; if we are run ur server whiteboy
-            if(LobbyHosting* lobbyHostingManager = dynamic_cast<LobbyHosting*>(lobManager.get()))
-                lobbyHostingManager->runServer();
-            //checks if we're joing; if we are joing find server
-            else if(LobbyDiscovery* lobbyDiscoveryManager = dynamic_cast<LobbyDiscovery*>(lobManager.get()))
-                if (!lobbyDiscoveryManager->isConnected())
-                    lobbyDiscoveryManager->findServer();
-
+            //polymorphism so no dynamic casting needed cuz apparenlty its inedfificnet
+            lobManager->establishConnection();
 
             //does normal packet stuff
             lobManager->updatePackets();

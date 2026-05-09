@@ -6,8 +6,9 @@ class LobbyDiscovery : public Lobby{
     public:
         LobbyDiscovery();
         ~LobbyDiscovery();
-        void findServer();
+        void virtual establishConnection();
 
+        //void findServer();
         // void virtual sendPackets();
         // void virtual receivePackets();
 };

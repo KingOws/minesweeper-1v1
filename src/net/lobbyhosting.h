@@ -9,9 +9,10 @@ class LobbyHosting : public Lobby{
     public:
         LobbyHosting();
         ~LobbyHosting();
-        void runServer();
+        virtual void establishConnection();
         void shutdown();
 
+        // void runServer();
         // void virtual sendPackets();
         // void virtual receivePackets();
 };

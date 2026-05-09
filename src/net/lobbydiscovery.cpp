@@ -11,7 +11,7 @@ LobbyDiscovery::LobbyDiscovery() {
     } else return;
 }
 
-void LobbyDiscovery::findServer() {
+void LobbyDiscovery::establishConnection() {
     if (isPlayerIPEmpty()) return;
 
     std::string base = playerAddress.toString();
