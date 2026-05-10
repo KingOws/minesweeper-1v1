@@ -6,6 +6,8 @@
 #include <iostream>
 #include <thread>
 #include "IScene.h"
+#include "board.h"
+
 
 class Lobby {
     protected:
@@ -16,7 +18,6 @@ class Lobby {
         sf::UdpSocket udpListener;
 
         sf::Packet packet;
-        LobbyInfo lobbyInfo;
         sf::IpAddress playerAddress{192,168,0,0};
         sf::IpAddress remoteAddress{192,168,0,255};
         bool hosting;
@@ -31,9 +32,8 @@ class Lobby {
         
         virtual void establishConnection(std::atomic<bool>&  running) {};
         virtual void disconnect();
-        virtual void updatePackets();
-        virtual void sendPackets();
-        virtual void receivePackets();
+        virtual void updatePackets() {};
+        virtual void sendPackets() {};
+        virtual void receivePackets() {};
         virtual bool isConnected() const {return connected;};
-        virtual LobbyInfo& getGameInfo() {return lobbyInfo;};
 };
