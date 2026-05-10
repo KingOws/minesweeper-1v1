@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-LobbyCreationScene::LobbyCreationScene(LobbyInfo& g) : MenuScene(), hostingInfo(g), infoLabels{sf::Text(font),sf::Text(font),sf::Text(font)}, buttonTexts{sf::Text(font),sf::Text(font)} {
+LobbyCreationScene::LobbyCreationScene(LobbyInfo& g, PlayerInfo& p) : MenuScene(), hostingInfo(g), mePlayer(p), infoLabels{sf::Text(font),sf::Text(font),sf::Text(font)}, buttonTexts{sf::Text(font),sf::Text(font)} {
     hostingInfo.hosting = true;
     // Info labels
 
@@ -49,9 +49,9 @@ void LobbyCreationScene::updateInfoText() {
         return ss.str();
     };
 
-    infoLabels[0].setString(fmt("Player ID:        ", hostingInfo.playerId == -1 ? "N/A" : std::to_string(hostingInfo.playerId)));
+    infoLabels[0].setString(fmt("Player ID:        ", mePlayer.playerId == -1 ? "N/A" : std::to_string(mePlayer.playerId)));
     infoLabels[1].setString(fmt("Players:          ", std::to_string(hostingInfo.currentPlayers) + " / " + std::to_string(hostingInfo.maxPlayers)));
-    infoLabels[2].setString(fmt("Status:           ", hostingInfo.inGame ? "In Game" : hostingInfo.gameCreated ? "Ready" : "Waiting..."));
+    infoLabels[2].setString(fmt("Status:           ", hostingInfo.inGame ? "In Game" : hostingInfo.inGame ? "Ready" : "Waiting..."));
 }
 
 void LobbyCreationScene::draw(sf::RenderWindow& window) {

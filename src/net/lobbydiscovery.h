@@ -1,14 +1,6 @@
 #pragma once
 #include "lobby.h"
 
-struct PlayerAction{
-    int playerId;
-
-    //receive updates that the scene will draw later
-    sf::Vector2f clickPos;
-    bool isRightClick;
-};
-
 class LobbyDiscovery : public Lobby{
     private:
         PlayerAction playerAction;
@@ -21,5 +13,6 @@ class LobbyDiscovery : public Lobby{
         void sendPackets() override;
         void receivePackets() override;
         void updatePackets() override;
+        LobbyInfo& getGameInfo(){return l;};
         PlayerAction& getPlayerAction() {return playerAction;};
 };

@@ -6,6 +6,7 @@ class LobbyCreationScene : public MenuScene{
     private:
         std::unique_ptr<LobbyHosting> ld;
         LobbyInfo& hostingInfo;
+        PlayerInfo& mePlayer;
 
         sf::Text infoLabels[3];
         sf::RectangleShape buttons[2];
@@ -14,7 +15,7 @@ class LobbyCreationScene : public MenuScene{
         void updateInfoText();
 
     public:
-        LobbyCreationScene(LobbyInfo& g);
+        LobbyCreationScene(LobbyInfo& g, PlayerInfo& p);
         ~LobbyCreationScene();
         void updateNet();
 

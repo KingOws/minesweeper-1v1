@@ -9,32 +9,6 @@ enum class Difficulty {easy, medium, hard};
 enum class PlayerMode {single, multi};
 enum class NetworkingMode {hosting, joining};
 
-struct LobbyInfo{
-    bool hosting = false;
-    bool inGame = false;
-    bool gameCreated = false;
-    int playerId = -1;
-    int currentPlayers = 0;
-    int maxPlayers = 2;
-    std::unique_ptr<sf::TcpSocket> socket;
-
-    friend sf::Packet& operator<<(sf::Packet& p, LobbyInfo& l){
-        p << l.hosting << l.inGame << l.gameCreated << l.playerId << l.currentPlayers << l.maxPlayers;
-        return p;
-    }
-
-    friend sf::Packet& operator>>(sf::Packet& p, LobbyInfo& l){
-        p >> l.hosting >> l.inGame >> l.gameCreated >> l.playerId >> l.currentPlayers >> l.maxPlayers;
-        return p;
-    }
-
-    friend std::ostream& operator<<(std::ostream& p, LobbyInfo& l){
-        p << "Hosting: " << l.hosting << " In Game: " << l.inGame << " Game created: " << l.gameCreated  << " Player Id: " << l.playerId << " Current Players: " << l.currentPlayers << " Max Players: " << l.maxPlayers << " \nAvailable Games:\n ";
-        return p;
-    }
-
-};
-
 class IScene{
     private:
     public:

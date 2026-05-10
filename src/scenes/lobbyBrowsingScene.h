@@ -8,6 +8,7 @@ class LobbyBrowsingScene : public IScene {
 private:
     std::unique_ptr<LobbyDiscovery> ld;
     LobbyInfo& joiningInfo;
+    PlayerAction& myPlayerActions;
 
         sf::Text infoLabels[3];
         sf::RectangleShape buttons[1];
@@ -17,7 +18,7 @@ private:
 
 
 public:
-    LobbyBrowsingScene(LobbyInfo&);
+    LobbyBrowsingScene(LobbyInfo&, PlayerAction&);
     ~LobbyBrowsingScene();
     virtual void draw(sf::RenderWindow &window);
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
