@@ -34,26 +34,6 @@ struct LobbyInfo{
     }
 };
 
-struct GameUpdate{
-    int playerId;
-    bool won;
-    bool lost;
-
-    sf::Vector2i tilePos;
-    int tileValue;
-};
-
-struct PlayerInfo{
-    std::unique_ptr<sf::TcpSocket> socket;
-
-    int playerId;
-    bool won = false;
-    bool lost = false;
-
-    //updated by host and then send updates to player
-    Board board;
-};
-
 struct PlayerAction{
     int playerId;
     bool inGame;
@@ -70,12 +50,13 @@ class Lobby {
 
         unsigned short DiscoveryPort = 49152;
         sf::UdpSocket udpListener;
-        LobbyInfo l;
-        PlayerInfo pi;
-        PlayerAction pa;
-        sf::Packet packet;
+        mutable sf::Packet packet;
         sf::IpAddress playerAddress{192,168,0,0};
         sf::IpAddress remoteAddress{192,168,0,255};
+
+        LobbyInfo lobbyInfo;
+        PlayerAction playerAction;
+
         bool hosting;
         bool connected;
         bool tcpLinkReady;
@@ -88,11 +69,12 @@ class Lobby {
         
         virtual void establishConnection(std::atomic<bool>&  running) {};
         virtual void disconnect();
-        virtual void updatePackets() {};
-        virtual void sendPackets() {};
-        virtual void receivePackets() {};
+
+        virtual const void updatePackets() {};
+        virtual const void sendPackets() {};
+        virtual const void receivePackets() {};
+
         virtual bool isConnected() const {return connected;};
-        virtual LobbyInfo& getGameInfo(){return l;};
-        virtual PlayerInfo& getPlayerInfo(){return pi;};
-        virtual PlayerAction& getPlayerAction(){return pa;};
+        virtual const LobbyInfo& getLobbyInfo() const {return lobbyInfo;};
+        virtual const PlayerAction& getPlayerAction() const {return playerAction;};
 };

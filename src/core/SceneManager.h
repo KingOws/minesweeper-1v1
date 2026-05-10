@@ -85,7 +85,10 @@ public:
                 // This assumes you removed the 'delete board' logic from GameScene::update
                 std::cout << "Returning to Menu. Game finalized.\n";
             }
-            tempNext = new MenuScene();
+            if(lobbyManager)
+                tempNext = new MenuScene(lobbyManager);
+            else
+                tempNext = new MenuScene();
             break;
 
         case SceneAction::goToNetworking:
@@ -94,13 +97,15 @@ public:
 
         case SceneAction::startLobby:
             lobbyManager = std::make_shared<LobbyHosting>();
-            tempNext = new LobbyCreationScene(lobbyManager->getGameInfo(), lobbyManager->getPlayerInfo());
+            if(lobbyManager)
+                tempNext = new LobbyCreationScene(lobbyManager);
 
             break;
 
         case SceneAction::searchLobby:
             lobbyManager = std::make_shared<LobbyDiscovery>();
-            tempNext = new LobbyBrowsingScene(lobbyManager->getGameInfo(), lobbyManager->getPlayerAction());
+            if(lobbyManager)
+                tempNext = new LobbyBrowsingScene(lobbyManager);
 
             break;
 

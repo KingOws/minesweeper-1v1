@@ -1,6 +1,10 @@
 #include "gameScene.h"
 #include <SFML/Graphics.hpp>
 
+GameScene::GameScene(std::shared_ptr<Lobby> netBitch){
+
+}
+
 GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
     sm = new SpriteManager(8);
     offset = {0.0,100.0};

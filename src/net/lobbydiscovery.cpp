@@ -43,7 +43,7 @@ void LobbyDiscovery::findServer(){
 }
 
 //  Receive Packets for the Game
-void LobbyDiscovery::receivePackets(){
+void const LobbyDiscovery::receivePackets(){
     sf::Socket::Status status = socket->receive(packet);
     if(status == sf::Socket::Status::Done){
         std::cout << "Package Received!" << std::endl;
@@ -54,7 +54,7 @@ void LobbyDiscovery::receivePackets(){
 }
 
 //  Send Packets for the Game
-void LobbyDiscovery::sendPackets(){
+void const LobbyDiscovery::sendPackets(){
     if(packet.getDataSize() == 0) return;
     updatePackets();
     sf::Socket::Status status = socket->send(packet);    
@@ -67,7 +67,7 @@ void LobbyDiscovery::sendPackets(){
 }
 
 // Update Packets
-void LobbyDiscovery::updatePackets(){
+void const LobbyDiscovery::updatePackets(){
     packet.clear();
 
 }

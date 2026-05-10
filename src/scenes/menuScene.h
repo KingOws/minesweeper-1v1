@@ -12,9 +12,13 @@ class MenuScene: public IScene{
     sf::Text textFields[3];
     Difficulty difficulty;
 
+    std::shared_ptr<Lobby> lobbyNet;
+    
     public:
     MenuScene();
+    MenuScene(std::shared_ptr<Lobby>);
     ~MenuScene();
+    void init();
     virtual void draw(sf::RenderWindow &window); 
     virtual void update() {return;};
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);

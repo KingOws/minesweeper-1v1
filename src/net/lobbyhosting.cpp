@@ -74,7 +74,7 @@ LobbyHosting::~LobbyHosting() {
     if (hosting) shutdown();
 }
 
-void LobbyHosting::sendPackets(){
+void const LobbyHosting::sendPackets(){
     if(packet.getDataSize() == 0) return;
     for (auto it = players.begin(); it != players.end(); it++) {
 
@@ -89,7 +89,7 @@ void LobbyHosting::sendPackets(){
     }
 }
 
-void LobbyHosting::receivePackets(){
+void const LobbyHosting::receivePackets(){
     for (auto it = players.begin(); it != players.end();) {
         if (selector.isReady(*(it->socket))) {
             sf::Socket::Status status = it->socket->receive(packet);
@@ -116,6 +116,6 @@ void LobbyHosting::receivePackets(){
     }
 }
 
-void LobbyHosting::handlePlayerPackets(PlayerInfo& player){
+void const LobbyHosting::handlePlayerPackets(PlayerInfo& player){
 
 }

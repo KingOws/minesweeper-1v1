@@ -1,8 +1,8 @@
 #include "lobbybrowsingscene.h"
 #include <iostream>
 
-LobbyBrowsingScene::LobbyBrowsingScene(LobbyInfo& g, PlayerAction& pa) : joiningInfo(g), myPlayerActions(pa), infoLabels{sf::Text(font),sf::Text(font),sf::Text(font)}, buttonTexts{sf::Text(font)} {
-    joiningInfo.hosting = false;
+LobbyBrowsingScene::LobbyBrowsingScene(std::shared_ptr<Lobby> net) : infoLabels{sf::Text(font),sf::Text(font),sf::Text(font)}, buttonTexts{sf::Text(font)} {
+    ld = std::dynamic_pointer_cast<LobbyDiscovery>(net);
     // Info label
     float posx = 100, posy = 50;
     for (auto& text : infoLabels) {
@@ -47,9 +47,9 @@ void LobbyBrowsingScene::updateInfoText() {
         return ss.str();
     };
 
-    infoLabels[0].setString(fmt("Player ID:        ", myPlayerActions.playerId == -1 ? "N/A" : std::to_string(myPlayerActions.playerId)));
-    infoLabels[1].setString(fmt("Players:          ", std::to_string(joiningInfo.currentPlayers) + " / " + std::to_string(joiningInfo.maxPlayers)));
-    infoLabels[2].setString(fmt("Status:           ", joiningInfo.inGame ? "In Game" : myPlayerActions.inGame ? "Ready" : "Waiting..."));
+    infoLabels[0].setString(fmt("Player ID:        ", ld->getPlayerAction().playerId == -1 ? "N/A" : std::to_string(ld->getPlayerAction().playerId)));
+    infoLabels[1].setString(fmt("Players:          ", std::to_string(ld->getLobbyInfo().currentPlayers) + " / " + std::to_string(ld->getLobbyInfo().maxPlayers)));
+    infoLabels[2].setString(fmt("Status:           ", ld->getPlayerAction().inGame ? "In Game" : ld->getPlayerAction().inGame ? "Ready" : "Waiting..."));
 }
 
 

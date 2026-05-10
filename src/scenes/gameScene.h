@@ -1,7 +1,5 @@
 #pragma once
-
-#include "IScene.h"
-#include "board.h"
+#include "lobby.h"
 #include "gameHeader.h"
 
 
@@ -11,6 +9,9 @@ class GameScene: public IScene{
     Board* board;
     GameHeader* gameHeader;
     SpriteManager* sm;
+
+    //these are horribly named
+    std::shared_ptr<Lobby> net;
 
     sf::Clock gameClock;
     int lastSecond = 0;
@@ -23,6 +24,7 @@ class GameScene: public IScene{
 
     public:
     GameScene(Difficulty d, sf::RenderWindow& window);
+    GameScene(std::shared_ptr<Lobby>);
     ~GameScene();
     virtual void draw(sf::RenderWindow &window); 
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);

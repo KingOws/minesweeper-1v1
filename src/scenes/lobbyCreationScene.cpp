@@ -2,8 +2,8 @@
 #include <iostream>
 #include <sstream>
 
-LobbyCreationScene::LobbyCreationScene(LobbyInfo& g, PlayerInfo& p) : MenuScene(), hostingInfo(g), mePlayer(p), infoLabels{sf::Text(font),sf::Text(font),sf::Text(font)}, buttonTexts{sf::Text(font),sf::Text(font)} {
-    hostingInfo.hosting = true;
+LobbyCreationScene::LobbyCreationScene(std::shared_ptr<Lobby> net) : MenuScene(), infoLabels{sf::Text(font),sf::Text(font),sf::Text(font)}, buttonTexts{sf::Text(font),sf::Text(font)} {
+    lh = std::dynamic_pointer_cast<LobbyHosting>(net);
     // Info labels
 
     float posx = 100, posy = 50;
@@ -49,9 +49,9 @@ void LobbyCreationScene::updateInfoText() {
         return ss.str();
     };
 
-    infoLabels[0].setString(fmt("Player ID:        ", mePlayer.playerId == -1 ? "N/A" : std::to_string(mePlayer.playerId)));
-    infoLabels[1].setString(fmt("Players:          ", std::to_string(hostingInfo.currentPlayers) + " / " + std::to_string(hostingInfo.maxPlayers)));
-    infoLabels[2].setString(fmt("Status:           ", hostingInfo.inGame ? "In Game" : hostingInfo.inGame ? "Ready" : "Waiting..."));
+    infoLabels[0].setString(fmt("Player ID:        ", lh->getPlayerAction().playerId == -1 ? "N/A" : std::to_string(lh->getPlayerAction().playerId)));
+    infoLabels[1].setString(fmt("Players:          ", std::to_string(lh->getLobbyInfo().currentPlayers) + " / " + std::to_string(lh->getLobbyInfo().maxPlayers)));
+    infoLabels[2].setString(fmt("Status:           ", lh->getPlayerAction().inGame ? "In Game" : lh->getPlayerAction().inGame ? "Ready" : "Waiting..."));
 }
 
 void LobbyCreationScene::draw(sf::RenderWindow& window) {
@@ -71,7 +71,7 @@ SceneAction LobbyCreationScene::handleLeftEvent(sf::Vector2f& mousePos) {
     if (buttons[0].getGlobalBounds().contains(mousePos))
         return SceneAction::goToMenu;
     else if (buttons[1].getGlobalBounds().contains(mousePos)) {
-        if (ld) ld->shutdown();
+        if (lh) lh->shutdown();
         return SceneAction::goToMainMenu;
     }
     return SceneAction::None;
@@ -79,10 +79,6 @@ SceneAction LobbyCreationScene::handleLeftEvent(sf::Vector2f& mousePos) {
 
 SceneAction LobbyCreationScene::handleRightEvent(sf::Vector2f& mousePos) {
     return SceneAction::None;
-}
-
-void LobbyCreationScene::updateNet() {
-    // called every network tick, UI updates automatically via updateInfoText()
 }
 
 LobbyCreationScene::~LobbyCreationScene() = default;

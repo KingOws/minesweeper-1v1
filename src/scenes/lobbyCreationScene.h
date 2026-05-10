@@ -4,10 +4,7 @@
 
 class LobbyCreationScene : public MenuScene{
     private:
-        std::unique_ptr<LobbyHosting> ld;
-        LobbyInfo& hostingInfo;
-        PlayerInfo& mePlayer;
-
+        std::shared_ptr<LobbyHosting> lh;
         sf::Text infoLabels[3];
         sf::RectangleShape buttons[2];
         sf::Text buttonTexts[2];
@@ -15,7 +12,7 @@ class LobbyCreationScene : public MenuScene{
         void updateInfoText();
 
     public:
-        LobbyCreationScene(LobbyInfo& g, PlayerInfo& p);
+        LobbyCreationScene(std::shared_ptr<Lobby>);
         ~LobbyCreationScene();
         void updateNet();
 
@@ -23,5 +20,5 @@ class LobbyCreationScene : public MenuScene{
         SceneAction handleLeftEvent(sf::Vector2f& mousePos) override;
         SceneAction handleRightEvent(sf::Vector2f& mousePos) override;  
 
-        std::unique_ptr<LobbyHosting> getLobbyHosting(){return std::move(ld);};
+        std::shared_ptr<Lobby> getLobbyHosting(){return std::move(lh);};
 };

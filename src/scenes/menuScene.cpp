@@ -2,8 +2,16 @@
 #include <iostream>
 #include "lobbydiscovery.h"
 
+MenuScene::MenuScene(std::shared_ptr<Lobby> l) : lobbyNet(l), textFields{sf::Text(font), sf::Text(font), sf::Text(font)}{
+    this->init();
+}
+
 MenuScene::MenuScene() : textFields{sf::Text(font), sf::Text(font), sf::Text(font)} {
-        float posx = 100, posy = 150;
+    this->init();
+}
+
+void MenuScene::init(){
+    float posx = 100, posy = 150;
         for (int i = 0; i < 3; i++) {
             sf::RectangleShape& rect = boxes[i];
             sf::Text& text = textFields[i];
@@ -36,6 +44,7 @@ MenuScene::MenuScene() : textFields{sf::Text(font), sf::Text(font), sf::Text(fon
                         rect.getPosition().y + rect.getSize().y / 2.f});
         }
 }
+
 
 
 void MenuScene::draw(sf::RenderWindow &window){
