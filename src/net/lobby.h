@@ -75,6 +75,9 @@ class Lobby {
         virtual const void receivePackets() {};
 
         virtual bool isConnected() const {return connected;};
-        virtual const LobbyInfo& getLobbyInfo() const {return lobbyInfo;};
-        virtual const PlayerAction& getPlayerAction() const {return playerAction;};
+        virtual const LobbyInfo& readLobbyInfo() const {return lobbyInfo;};
+        virtual const PlayerAction& readPlayerAction() const {return playerAction;};
+
+        virtual LobbyInfo& writeLobbyInfo() {return lobbyInfo;};
+        virtual PlayerAction& writePlayerAction() {return playerAction;};
 };
