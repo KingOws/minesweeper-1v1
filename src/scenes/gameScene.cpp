@@ -1,17 +1,25 @@
 #include "gameScene.h"
 #include <SFML/Graphics.hpp>
 
-GameScene::GameScene(std::shared_ptr<Lobby> netBitch){
-
+GameScene::GameScene(std::shared_ptr<Lobby> l, int d, sf::RenderWindow& window) : lobbyNet(l), diff(static_cast<Difficulty>(d)){
+    this->init();
 }
 
-GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
+GameScene::GameScene(std::shared_ptr<Lobby> l, Difficulty d, sf::RenderWindow& window) : lobbyNet(l), diff(d){
+    this->init();
+}
+
+
+GameScene::GameScene(Difficulty d, sf::RenderWindow& window): diff(d){
+    this->init();
+}
+
+void GameScene::init(){
     sm = new SpriteManager(8);
-    offset = {0.0,100.0};
     gameClock.start();
 
     int r, c, b;
-    switch (d) {
+    switch (diff) {
         case Difficulty::easy:   
             r = 10; c = 10; b = 10; 
             gameHeader = new GameHeader(b, {32,27},{210,27});
@@ -27,7 +35,6 @@ GameScene::GameScene(Difficulty d, sf::RenderWindow& window){
     }
     board = new Board(r, c, b, offset);
     board->updateBoard(); 
-
 }
 
 void GameScene::draw(sf::RenderWindow &window){

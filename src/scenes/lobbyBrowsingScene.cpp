@@ -47,9 +47,9 @@ void LobbyBrowsingScene::updateInfoText() {
         return ss.str();
     };
 
-    infoLabels[0].setString(fmt("Player ID:        ", ld->getPlayerAction().playerId == -1 ? "N/A" : std::to_string(ld->getPlayerAction().playerId)));
-    infoLabels[1].setString(fmt("Players:          ", std::to_string(ld->getLobbyInfo().currentPlayers) + " / " + std::to_string(ld->getLobbyInfo().maxPlayers)));
-    infoLabels[2].setString(fmt("Status:           ", ld->getPlayerAction().inGame ? "In Game" : ld->getPlayerAction().inGame ? "Ready" : "Waiting..."));
+    infoLabels[0].setString(fmt("Player ID:        ", ld->readPlayerAction().playerId == -1 ? "N/A" : std::to_string(ld->readPlayerAction().playerId)));
+    infoLabels[1].setString(fmt("Players:          ", std::to_string(ld->readLobbyInfo().currentPlayers) + " / " + std::to_string(ld->readLobbyInfo().maxPlayers)));
+    infoLabels[2].setString(fmt("Status:           ", ld->readPlayerAction().inGame ? "In Game" : ld->readPlayerAction().inGame ? "Ready" : "Waiting..."));
 }
 
 
@@ -81,6 +81,15 @@ SceneAction LobbyBrowsingScene::handleRightEvent(sf::Vector2f &mousePos) {
     return SceneAction::None;
 }
 
-void LobbyBrowsingScene::update(){    
-    
+void LobbyBrowsingScene::update(){
+
+}
+
+SceneAction LobbyBrowsingScene::update(int i){    
+    if(ld->readLobbyInfo().inGame){
+        std::cout << "I am supposed to be in game!!";
+        return SceneAction::startGame;
+    }
+
+    return SceneAction::None;
 }

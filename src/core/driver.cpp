@@ -62,6 +62,12 @@ void gameRun(sf::RenderWindow& window, SceneManager& sm){
             }
         }
 
+        if(sm.getLobbyManager()){
+            if(auto lobbyBrowsingScene = dynamic_cast<LobbyBrowsingScene*>(sm.getScene())){
+                sm.processAction(lobbyBrowsingScene->update(1), window);
+            }
+        }
+
         sm.updateAndSwap();
         window.clear({255, 255, 255, 255});
         sm.displayScene(window);

@@ -5,7 +5,10 @@ LobbyHosting::LobbyHosting() : Lobby(){
     broadcastTimer.start();
     hosting = true;
     lobbyInfo.inGame = false;
-    
+
+    //creates the host player
+    //players.emplace_back(std::in_place, std::move(this->socket), 1, false);
+
     sf::Socket::Status status = listener.listen(GAME_PORT);
     if(status == sf::Socket::Status::Done){
         std::cout << "Host is listening on port " << GAME_PORT << std::endl;
@@ -42,13 +45,8 @@ void LobbyHosting::runServer(){
 
                 } else {
                     std::cout << "Client connected: " << newSocket->getRemoteAddress().value() << std::endl;
-                    PlayerInfo newPlayer;
-                    newPlayer.playerId = lobbyInfo.currentPlayers;
-                    newPlayer.socket = std::move(newSocket);
-                    selector.add(*newPlayer.socket);
-                    //also has to be move because it contains socket yuck
-                    players.push_back(std::move(newPlayer));
-                    lobbyInfo.currentPlayers++;
+                    players.emplace_back(std::in_place, std::move(newSocket), ++lobbyInfo.currentPlayers);
+                    selector.add(*players.back()->socket);
                     tcpLinkReady = true;
                 }
             }
@@ -59,8 +57,8 @@ void LobbyHosting::runServer(){
 
 void LobbyHosting::shutdown(){
     for(auto& player : players){
-        selector.remove(*player.socket);
-        player.socket->disconnect();
+        selector.remove(*player->socket);
+        player->socket->disconnect();
     }
     players.clear();
     selector.remove(listener);
@@ -74,40 +72,44 @@ LobbyHosting::~LobbyHosting() {
     if (hosting) shutdown();
 }
 
-void const LobbyHosting::sendPackets(){
-    if(packet.getDataSize() == 0) return;
+void LobbyHosting::sendPackets(){
+    packet.clear();
     for (auto it = players.begin(); it != players.end(); it++) {
-
-
-        sf::Socket::Status status = it->socket->send(packet);
-        packet.clear();
-
+        switch(playerAction.inGame){
+            case false:
+                packet << lobbyInfo;
+                packet << (*it)->playerAction->playerId << (*it)->playerAction->inGame;
+                break;
+            case true:
+                packet << gameUpdate;
+                packet << (*it)->playerAction->inGame << (*it)->playerAction->inGame;
+                break;
+        }
+        if(packet.getDataSize() == 0) return;
+        sf::Socket::Status status = (*it)->socket->send(packet);
         if(status == sf::Socket::Status::Done)
-            std::cout << "Package Sent to " << it->socket->getRemoteAddress()->toString() << "!\n";
+            std::cout << "Package Sent to " << (*it)->socket->getRemoteAddress()->toString() << "!\n";
         else if(status == sf::Socket::Status::Error)
             std::cerr << "Big error\n";
     }
 }
 
-void const LobbyHosting::receivePackets(){
+void LobbyHosting::receivePackets(){
     for (auto it = players.begin(); it != players.end();) {
-        if (selector.isReady(*(it->socket))) {
-            sf::Socket::Status status = it->socket->receive(packet);
+        if (selector.isReady(*((*it)->socket))) {
+            sf::Socket::Status status = (*it)->socket->receive(packet);
 
             if (status == sf::Socket::Status::Done) {
                 if(lobbyInfo.inGame == true){
-                    std::cout << "Received from " << it->socket->getRemoteAddress()->toString() << '\n';
-
-
-
-                    handlePlayerPackets((*it));
+                    std::cout << "Received from " << (*it)->socket->getRemoteAddress()->toString() << '\n';
+                    handlePlayerPackets(*(*it));
                     packet.clear();
                     ++it;
                 }
             } else if (status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error) {
                 lobbyInfo.currentPlayers--;
-                std::cout << "Client disconnected: " << it->socket->getRemoteAddress()->toString() << '\n';
-                selector.remove(*(it->socket));
+                std::cout << "Client disconnected: " << (*it)->socket->getRemoteAddress()->toString() << '\n';
+                selector.remove(*((*it)->socket));
                 it = players.erase(it);
             }else
                 ++it;
@@ -116,6 +118,15 @@ void const LobbyHosting::receivePackets(){
     }
 }
 
-void const LobbyHosting::handlePlayerPackets(PlayerInfo& player){
+void LobbyHosting::handlePlayerPackets(PlayerInfo& player){
+    packet >> player.playerAction->clickPos >> player.playerAction->isRightClick;
 
+    gameUpdate.tilePos.x = (player.playerAction->clickPos.x-gScene.getOffset().x)/Tile::getSize();
+    gameUpdate.tilePos.y = (player.playerAction->clickPos.y-gScene.getOffset().y)/Tile::getSize();
+
+    if(player.playerAction->isRightClick)
+        player.board->placeFlag(gameUpdate.tilePos);
+    
+    if(!player.playerAction->isRightClick)
+        player.board->revealTile(gameUpdate.tilePos);
 }

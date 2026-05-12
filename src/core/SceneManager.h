@@ -73,16 +73,23 @@ public:
         switch (action) {
         case SceneAction::startGame:
             if (MenuScene* menu = dynamic_cast<MenuScene*>(currScene)) {
-                tempNext = new GameScene(menu->getDiff(), window);
-                std::cout << "[SceneManager] Starting New Game...\n";
+                if(lobbyManager){
+                    tempNext = new GameScene(lobbyManager, menu->getDiff(), window);
+                }else{
+                    tempNext = new GameScene(menu->getDiff(), window);
+                    std::cout << "[SceneManager] Starting New Game...\n";
+                }
+            }else if(LobbyBrowsingScene* lobbyBrowsing = dynamic_cast<LobbyBrowsingScene*>(currScene)){
+                if(lobbyManager){
+                    if(lobbyManager->readLobbyInfo().difficulty == 0 || lobbyManager->readLobbyInfo().difficulty == 1 || lobbyManager->readLobbyInfo().difficulty == 2){
+                        tempNext = new GameScene(lobbyManager, lobbyManager->readLobbyInfo().difficulty, window);
+                    }
+                }
             }
             break;
 
         case SceneAction::goToMenu:
-            // Check results before leaving GameScene
             if (GameScene* game = dynamic_cast<GameScene*>(currScene)) {
-                // Here we print to terminal based on the final state
-                // This assumes you removed the 'delete board' logic from GameScene::update
                 std::cout << "Returning to Menu. Game finalized.\n";
             }
             if(lobbyManager)

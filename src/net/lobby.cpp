@@ -1,5 +1,6 @@
 #include "Lobby.h"
 
+int PlayerAction::idGen = 0;
 //Set Ip Address
 Lobby::Lobby() {
     udpListener.setBlocking(false);

@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "pactor.h"
 #include <iostream>
 class SceneManager;
 

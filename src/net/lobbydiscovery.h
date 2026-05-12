@@ -9,7 +9,7 @@ class LobbyDiscovery : public Lobby{
         void virtual establishConnection(std::atomic<bool>&  running);
 
         void findServer();
-        void const sendPackets() override;
-        void const receivePackets() override;
-        void const updatePackets() override;
+        void sendPackets() override;
+        void receivePackets() override;
+        void updatePackets() override;
 };

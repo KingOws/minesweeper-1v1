@@ -43,33 +43,48 @@ void LobbyDiscovery::findServer(){
 }
 
 //  Receive Packets for the Game
-void const LobbyDiscovery::receivePackets(){
+void LobbyDiscovery::receivePackets(){
     sf::Socket::Status status = socket->receive(packet);
     if(status == sf::Socket::Status::Done){
         std::cout << "Package Received!" << std::endl;
-
-
+        switch(playerAction.inGame){
+            case false:
+                packet >> lobbyInfo;
+                packet >> playerAction;
+                break;
+            case true:
+                packet >> gameUpdate;
+                packet >> playerAction;
+                break;
+        }
         packet.clear();
     }
 }
 
 //  Send Packets for the Game
-void const LobbyDiscovery::sendPackets(){
+void LobbyDiscovery::sendPackets(){
+    packet.clear();
+    switch(playerAction.inGame){
+        //I can't think of a reason as to why the client would saend smth to host in lboby but leaving it here just in case
+        case false:
+            break;
+        case true:
+            packet << playerAction;
+            break;
+    }
+
     if(packet.getDataSize() == 0) return;
-    updatePackets();
     sf::Socket::Status status = socket->send(packet);    
     if(status == sf::Socket::Status::Done){
         std::cout << "Package Sent!" << std::endl;
-        packet.clear();
     } else if(status == sf::Socket::Status::Disconnected){
         disconnect();
     }
 }
 
-// Update Packets
-void const LobbyDiscovery::updatePackets(){
-    packet.clear();
 
+void LobbyDiscovery::updatePackets(){
+    std::cout << "treid updating packets!";
 }
 
 LobbyDiscovery::~LobbyDiscovery() {}

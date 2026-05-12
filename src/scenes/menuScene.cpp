@@ -63,9 +63,14 @@ SceneAction MenuScene::handleLeftEvent(sf::Vector2f &mousePos){
     for (int i = 0; i < 3; i++) {
         if (boxes[i].getGlobalBounds().contains(mousePos)) {
             this->difficulty = static_cast<Difficulty>(i);
-            return SceneAction::startGame;
+            if(lobbyNet){
+                lobbyNet->writeLobbyInfo().difficulty = i;
+                lobbyNet->writeLobbyInfo().inGame = true;
+            }
+                return SceneAction::startGame;
         }
     }
+
     return SceneAction::None;
 } 
 

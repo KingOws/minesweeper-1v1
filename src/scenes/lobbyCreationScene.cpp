@@ -49,9 +49,9 @@ void LobbyCreationScene::updateInfoText() {
         return ss.str();
     };
 
-    infoLabels[0].setString(fmt("Player ID:        ", lh->getPlayerAction().playerId == -1 ? "N/A" : std::to_string(lh->getPlayerAction().playerId)));
-    infoLabels[1].setString(fmt("Players:          ", std::to_string(lh->getLobbyInfo().currentPlayers) + " / " + std::to_string(lh->getLobbyInfo().maxPlayers)));
-    infoLabels[2].setString(fmt("Status:           ", lh->getPlayerAction().inGame ? "In Game" : lh->getPlayerAction().inGame ? "Ready" : "Waiting..."));
+    infoLabels[0].setString(fmt("Player ID:        ", lh->readPlayerAction().playerId == -1 ? "N/A" : std::to_string(lh->readPlayerAction().playerId)));
+    infoLabels[1].setString(fmt("Players:          ", std::to_string(lh->readLobbyInfo().currentPlayers) + " / " + std::to_string(lh->readLobbyInfo().maxPlayers)));
+    infoLabels[2].setString(fmt("Status:           ", lh->readPlayerAction().inGame ? "In Game" : lh->readPlayerAction().inGame ? "Ready" : "Waiting..."));
 }
 
 void LobbyCreationScene::draw(sf::RenderWindow& window) {

@@ -1,34 +1,27 @@
 #pragma once
 #include "lobby.h"
+#include "gameSCene.h"
 
 
 struct PlayerInfo{
     std::unique_ptr<sf::TcpSocket> socket;
+    std::optional<PlayerAction> playerAction;
+    std::optional<GameUpdate> gameUpdate;
+    std::optional<Board> board;
 
-    int playerId;
-    bool won = false;
-    bool lost = false;
-
-    //updated by host and then send updates to player
-    Board board;
+    PlayerInfo(std::unique_ptr<sf::TcpSocket> s) : socket(std::move(s)), playerAction() {}
+    PlayerInfo(std::unique_ptr<sf::TcpSocket> s, int i) : socket(std::move(s)), playerAction(i) {}
 };
 
-struct GameUpdate{
-    int playerId;
-    bool won;
-    bool lost;
-
-    sf::Vector2i tilePos;
-    int tileValue;
-};
 
 class LobbyHosting : public Lobby{
     private:
         sf::SocketSelector selector;
         sf::TcpListener listener;
-        LobbyInfo lobbyInfo;
-        std::vector<PlayerInfo> players;
         sf::Clock broadcastTimer;
+
+        GameScene gScene;
+        std::vector<std::optional<PlayerInfo>> players;
     public:
         LobbyHosting();
         ~LobbyHosting();
@@ -36,7 +29,7 @@ class LobbyHosting : public Lobby{
         void shutdown();
 
         void runServer();
-        virtual const void sendPackets() override;
-        virtual const void receivePackets() override;
-        virtual const void handlePlayerPackets(PlayerInfo&);
+        virtual void sendPackets() override;
+        virtual void receivePackets() override;
+        virtual void handlePlayerPackets(PlayerInfo&);
 };

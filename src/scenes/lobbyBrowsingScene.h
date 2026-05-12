@@ -22,6 +22,7 @@ public:
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
     virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update();
+    SceneAction update(int);
     void updateNet();
 
     std::shared_ptr<LobbyDiscovery> getLobbyDiscovery(){return std::move(ld);};

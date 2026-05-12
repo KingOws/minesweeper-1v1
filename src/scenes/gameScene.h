@@ -11,7 +11,7 @@ class GameScene: public IScene{
     SpriteManager* sm;
 
     //these are horribly named
-    std::shared_ptr<Lobby> net;
+    std::shared_ptr<Lobby> lobbyNet;
 
     sf::Clock gameClock;
     int lastSecond = 0;
@@ -20,17 +20,22 @@ class GameScene: public IScene{
     unsigned short tileSize;
     unsigned short col;
     unsigned short row;
-    sf::Vector2f offset;
+    inline static const sf::Vector2f offset{0.f,100.f};
 
     public:
     GameScene(Difficulty d, sf::RenderWindow& window);
-    GameScene(std::shared_ptr<Lobby>);
+    GameScene(std::shared_ptr<Lobby>, int, sf::RenderWindow&);
+    GameScene(std::shared_ptr<Lobby>, Difficulty, sf::RenderWindow&);
+    GameScene(){}
     ~GameScene();
+
+    void init();
     virtual void draw(sf::RenderWindow &window); 
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
     virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update();
 
+    sf::Vector2f getOffset() const {return offset;};
     void checkGameWon();
     virtual SceneAction handleDevWin();
 };
