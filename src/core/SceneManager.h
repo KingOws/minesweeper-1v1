@@ -74,7 +74,7 @@ public:
         case SceneAction::startGame:
             if (MenuScene* menu = dynamic_cast<MenuScene*>(currScene)) {
                 if(lobbyManager){
-                    tempNext = new GameScene(lobbyManager, static_cast<int>(menu->getDiff()), window, lobbyManager->readLobbyInfo().seed);
+                    tempNext = new GameScene(lobbyManager, lobbyManager->readLobbyInfo().difficulty, window, lobbyManager->readLobbyInfo().seed);
                 }else{
                     tempNext = new GameScene(menu->getDiff(), window);
                     std::cout << "[SceneManager] Starting New Game...\n";

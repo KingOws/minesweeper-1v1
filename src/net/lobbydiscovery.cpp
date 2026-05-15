@@ -46,7 +46,7 @@ void LobbyDiscovery::findServer(){
 void LobbyDiscovery::receivePackets(){
     sf::Socket::Status status = socket->receive(packet);
     if(status == sf::Socket::Status::Done){
-        //std::cout << "Package Received!" << std::endl;
+        std::cout << "Package Received!" << std::endl;
         switch(playerAction.inGame){
             case false:
                 packet >> lobbyInfo;
