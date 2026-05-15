@@ -13,6 +13,10 @@ Board::Board(){
     lost = false;
 }
 
+Board::Board(int r, int c, int b, sf::Vector2f offset, int s) : Board(r, c, b, offset){
+    seed = s;
+}
+
 Board::Board(int r, int c, int b, sf::Vector2f offset){
     numFlags = b;
     row = r;
@@ -82,7 +86,7 @@ void Board::generateBombs() {
     }
     
     while(bombs.size() > numBombs) {
-        static std::mt19937 gen(std::random_device{}());
+        static std::mt19937 gen(seed);
         std::uniform_int_distribution<> disp(0, bombs.size()-1);
         bombs.erase(bombs.begin() + disp(gen));
     }

@@ -9,6 +9,7 @@ class GameScene: public IScene{
     Board* board;
     GameHeader* gameHeader;
     SpriteManager* sm;
+    int seed;
 
     //these are horribly named
     std::shared_ptr<Lobby> lobbyNet;
@@ -25,6 +26,7 @@ class GameScene: public IScene{
     public:
     GameScene(Difficulty d, sf::RenderWindow& window);
     GameScene(std::shared_ptr<Lobby>, int, sf::RenderWindow&);
+    GameScene(std::shared_ptr<Lobby>, int, sf::RenderWindow&, int);
     GameScene(std::shared_ptr<Lobby>, Difficulty, sf::RenderWindow&);
     GameScene(){}
     ~GameScene();

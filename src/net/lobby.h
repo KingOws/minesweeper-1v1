@@ -16,8 +16,8 @@ enum GameState{
 };
 
 struct GameUpdate{
-    bool won;
-    bool lost;
+    bool won = false;
+    bool lost = false;
 
     sf::Vector2i tilePos;
     int tileValue;
@@ -36,14 +36,15 @@ struct LobbyInfo{
     int maxPlayers = 2;
     bool inGame = false;
     int difficulty;
+    int seed;
 
     // SFML Packet Serialization
     friend sf::Packet& operator<<(sf::Packet& p, const LobbyInfo& l) {
-        return p << l.currentPlayers << l.maxPlayers << l.inGame << l.difficulty;
+        return p << l.currentPlayers << l.maxPlayers << l.inGame << l.difficulty << l.seed;
     }
 
     friend sf::Packet& operator>>(sf::Packet& p, LobbyInfo& l) {
-        return p >> l.currentPlayers >> l.maxPlayers >> l.inGame >> l.difficulty;
+        return p >> l.currentPlayers >> l.maxPlayers >> l.inGame >> l.difficulty >> l.seed;
     }
 
 };

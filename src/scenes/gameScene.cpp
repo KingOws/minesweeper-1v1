@@ -1,6 +1,10 @@
 #include "gameScene.h"
 #include <SFML/Graphics.hpp>
 
+GameScene::GameScene(std::shared_ptr<Lobby> l, int d, sf::RenderWindow& window, int s) : lobbyNet(l), diff(static_cast<Difficulty>(d)), seed(s){
+    this->init();
+}
+
 GameScene::GameScene(std::shared_ptr<Lobby> l, int d, sf::RenderWindow& window) : lobbyNet(l), diff(static_cast<Difficulty>(d)){
     this->init();
 }
@@ -33,7 +37,8 @@ void GameScene::init(){
             gameHeader = new GameHeader(b, {96,27},{786,27});
             break;
     }
-    board = new Board(r, c, b, offset);
+
+    board = new Board(r, c, b, offset, seed);
     board->updateBoard(); 
 }
 
@@ -61,6 +66,8 @@ SceneAction GameScene::handleLeftEvent(sf::Vector2f &mousePos) {
     }
 
     // 2. Standard gameplay
+    lobbyNet->writePlayerAction().clickPos = mousePos;
+    lobbyNet->writePlayerAction().isRightClick = false;
     if (board->revealTile(board->handleMouse(mousePos), true)) {
         board->setLost(true);
         std::cout << "BOOM!\n";
@@ -78,6 +85,9 @@ SceneAction GameScene::handleDevWin(){
 
 SceneAction GameScene::handleRightEvent(sf::Vector2f &mousePos) {
     if (board == nullptr) return SceneAction::goToMenu;
+
+    lobbyNet->writePlayerAction().clickPos = mousePos;
+    lobbyNet->writePlayerAction().isRightClick = true;
     board->placeFlag(board->handleMouse(mousePos));
     return SceneAction::None;
 }

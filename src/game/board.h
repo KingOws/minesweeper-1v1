@@ -14,6 +14,7 @@ class Board{
         short counter;
         bool lost;
         bool won;
+        int seed;
         sf::Vector2f offset;
         std::vector<Tile*> bombs;
         Tile* tiles;
@@ -23,6 +24,7 @@ class Board{
         Board();
         ~Board();
         Board(int r, int c, int b, sf::Vector2f v);
+        Board(int r, int c, int b, sf::Vector2f v, int s);
 
 
         Tile* getTile(int x, int y) const {return &tiles[x*col+y];};

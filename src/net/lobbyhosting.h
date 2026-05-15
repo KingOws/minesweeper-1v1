@@ -22,6 +22,7 @@ class LobbyHosting : public Lobby{
 
         GameScene gScene;
         std::vector<std::optional<PlayerInfo>> players;
+
     public:
         LobbyHosting();
         ~LobbyHosting();

@@ -74,7 +74,7 @@ public:
         case SceneAction::startGame:
             if (MenuScene* menu = dynamic_cast<MenuScene*>(currScene)) {
                 if(lobbyManager){
-                    tempNext = new GameScene(lobbyManager, menu->getDiff(), window);
+                    tempNext = new GameScene(lobbyManager, static_cast<int>(menu->getDiff()), window, lobbyManager->readLobbyInfo().seed);
                 }else{
                     tempNext = new GameScene(menu->getDiff(), window);
                     std::cout << "[SceneManager] Starting New Game...\n";
@@ -82,7 +82,7 @@ public:
             }else if(LobbyBrowsingScene* lobbyBrowsing = dynamic_cast<LobbyBrowsingScene*>(currScene)){
                 if(lobbyManager){
                     if(lobbyManager->readLobbyInfo().difficulty == 0 || lobbyManager->readLobbyInfo().difficulty == 1 || lobbyManager->readLobbyInfo().difficulty == 2){
-                        tempNext = new GameScene(lobbyManager, lobbyManager->readLobbyInfo().difficulty, window);
+                        tempNext = new GameScene(lobbyManager, lobbyManager->readLobbyInfo().difficulty, window, lobbyManager->readLobbyInfo().seed);
                     }
                 }
             }

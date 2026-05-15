@@ -5,6 +5,7 @@ LobbyHosting::LobbyHosting() : Lobby(){
     broadcastTimer.start();
     hosting = true;
     lobbyInfo.inGame = false;
+    lobbyInfo.seed = std::random_device{}();
 
     //creates the host player
     //players.emplace_back(std::in_place, std::move(this->socket), 1, false);
@@ -82,13 +83,14 @@ void LobbyHosting::sendPackets(){
                 break;
             case true:
                 packet << gameUpdate;
-                packet << (*it)->playerAction->inGame << (*it)->playerAction->inGame;
+                packet << (*it)->playerAction->playerId << (*it)->playerAction->inGame;
                 break;
         }
         if(packet.getDataSize() == 0) return;
         sf::Socket::Status status = (*it)->socket->send(packet);
         if(status == sf::Socket::Status::Done)
-            std::cout << "Package Sent to " << (*it)->socket->getRemoteAddress()->toString() << "!\n";
+            //std::cout << "Package Sent to " << (*it)->socket->getRemoteAddress()->toString() << "!\n";
+            std::cout << "";
         else if(status == sf::Socket::Status::Error)
             std::cerr << "Big error\n";
     }
@@ -101,7 +103,7 @@ void LobbyHosting::receivePackets(){
 
             if (status == sf::Socket::Status::Done) {
                 if(lobbyInfo.inGame == true){
-                    std::cout << "Received from " << (*it)->socket->getRemoteAddress()->toString() << '\n';
+                    //std::cout << "Received from " << (*it)->socket->getRemoteAddress()->toString() << '\n';
                     handlePlayerPackets(*(*it));
                     packet.clear();
                     ++it;
@@ -129,4 +131,9 @@ void LobbyHosting::handlePlayerPackets(PlayerInfo& player){
     
     if(!player.playerAction->isRightClick)
         player.board->revealTile(gameUpdate.tilePos);
+
+    player.gameUpdate->won = player.board->getWon();
+    player.gameUpdate->lost = player.board->getLost();
+
+    std::cout << player.board->getWon();
 }
