@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "SceneManager.h"
+#include "minesweeper.h"
 #include <thread>
 #include <atomic>
 
@@ -8,14 +8,10 @@ void networkRun(SceneManager&, std::atomic<bool>&);
 
 int main()
 {   
-    sf::Image icon;
-    if (!icon.loadFromFile("../images/icon.png")) {
-        std::cerr << "Failed to load icon.png" << std::endl;
-        return -1;
+    Minesweeper m;
+    while(m.isRunning()){
+        m.run();
     }
-
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "Minesweeper Client");
-    window.setIcon(icon);
 
     SceneManager sm;
 
