@@ -8,11 +8,15 @@ SceneManager::~SceneManager(){
 
 }
 
-void SceneManager::handleEvent(sf::Event& event){
+void SceneManager::update(){
+    currScene->update();
+}
+
+void SceneManager::handleEvent(sf::Event& event, GAMESTATE& gameState){
     swapScenes(currScene->handleEvent(event));
 }
 
-void SceneManager::swapScenes(ChangeScenes sceneChange){
+void SceneManager::swapScenes(SceneAction sceneChange){
     std::unique_ptr<IScene> nextScene;
 
     switch(sceneChange){
@@ -42,7 +46,7 @@ void SceneManager::swapScenes(ChangeScenes sceneChange){
 }
 
 std::unique_ptr<IScene> SceneManager::createGame(){
-    Difficulty diff = Difficulty::hard;
+    Difficulty diff = Difficulty::HARD;
 
     if(MenuScene* menu = static_cast<MenuScene*>(currScene.get()))
         diff = menu->getDifficulty();

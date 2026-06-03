@@ -3,7 +3,7 @@
 //std
 #include <iostream>
 
-Minesweeper::Minesweeper() : m_isRunning(true){
+Minesweeper::Minesweeper() : m_isRunning(true), gameState(GAMESTATE::MENU){
     initWindow();
 }
 
@@ -16,10 +16,19 @@ void Minesweeper::run(){
 }
 
 void Minesweeper::update(){
-    updateNetManager();
     updateScManager();
-    updateSpriteManager();
+    if(updateNetManager()) return;
+    createNetManager();
 }
+
+void Minesweeper::createNetManager(){
+    if(gameState == GAMESTATE::JOINING_WAITING)
+        networkManager = std::make_unique<NetworkManager>();
+
+    if(gameState == GAMESTATE::HOSTING_WAITING)
+        networkManager = std::make_unique<NetworkManager>();
+}
+
 void Minesweeper::display(){
     window.clear();
     sceneManager.displayScene(window);
@@ -33,20 +42,31 @@ void Minesweeper::handleEvents(){
         if (event->is<sf::Event::Closed>()){
             window.close();
         }
-        sceneManager.handleEvents(*event);
+        sceneManager.handleEvent(*event, gameState);
     }
 }
 
 void Minesweeper::updateScManager(){
-
+    if(gameState == GAMESTATE::JOINING_WAITING 
+        || gameState == GAMESTATE::JOINING_PLAYING
+        || gameState == GAMESTATE::HOSTING_PLAYING
+        || gameState == GAMESTATE::HOSTING_WAITING) 
+        sceneManager.update(networkInfo);
+    else 
+        sceneManager.update();
 }
 
-void Minesweeper::updateNetManager(){
+bool Minesweeper::updateNetManager(){
+    if (gameState == GAMESTATE::MENU || gameState == GAMESTATE::SP_PLAYING) {
+        if (networkManager)
+            networkManager.reset(); 
+    }
 
-}
-
-void Minesweeper::updateSpriteManager(){
-
+    if(networkManager){
+        networkManager->update(networkInfo);
+        return true;
+    }
+    return false;
 }
 
 void Minesweeper::initWindow(){

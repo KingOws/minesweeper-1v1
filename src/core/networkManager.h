@@ -1,6 +1,11 @@
 #pragma once
 
-class NetworkManager{
+struct NetworkInfo;
 
+class NetworkManager{
+    public: 
+        void update(NetworkInfo& networkInfo);
+
+    private:
 
 };
