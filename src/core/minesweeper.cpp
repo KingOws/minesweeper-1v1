@@ -33,7 +33,7 @@ void Minesweeper::handleEvents(){
         if (event->is<sf::Event::Closed>()){
             window.close();
         }
-        sceneManager.handleEvent(*event);
+        sceneManager.handleEvents(*event);
     }
 }
 

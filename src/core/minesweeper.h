@@ -11,9 +11,10 @@ class Minesweeper{
         void initWindow();
 
         void run();
-        auto getEvents();
+        void handleEvents();
         void display(); 
 
+        void update();
         void updateScManager();
         void updateNetManager();
         void updateSpriteManager();
@@ -23,7 +24,7 @@ class Minesweeper{
     private:
         SceneManager sceneManager;
         NetworkManager networkManager;
-        SpriteManager spriteManager;
+        SpriteManager spriteManager{1};
         sf::RenderWindow window{sf::VideoMode({800, 600}), "Minesweeper Client"};
 
         sf::Image icon;
