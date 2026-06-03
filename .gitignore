@@ -46,3 +46,5 @@
 build/
 src/build/
 server/build/
+
+compile_flags.txt

@@ -47,10 +47,7 @@ void Minesweeper::handleEvents(){
 }
 
 void Minesweeper::updateScManager(){
-    if(gameState == GAMESTATE::JOINING_WAITING 
-        || gameState == GAMESTATE::JOINING_PLAYING
-        || gameState == GAMESTATE::HOSTING_PLAYING
-        || gameState == GAMESTATE::HOSTING_WAITING) 
+    if(isMultiplayer(gameState)) 
         sceneManager.update(networkInfo);
     else 
         sceneManager.update();

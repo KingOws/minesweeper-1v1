@@ -1,5 +1,6 @@
 #pragma once
-#include "IScene.h"
+#include "../net/NetworkInfo.h"
+#include "../scenes/IScene.h"
 #include "spritemanager.h"
 #include <SFML/Graphics.hpp>
 
@@ -8,7 +9,7 @@
 
 enum class GAMESTATE;
 
-enum SceneAction{
+enum class SceneAction{
   MAIN_MENU,
   DIFF_SELECT,
   IN_GAME,
@@ -18,7 +19,7 @@ enum SceneAction{
   GO_BACK
 };
 
-enum Difficulty{
+enum class Difficulty{
   EASY,
   MEDIUM, 
   HARD

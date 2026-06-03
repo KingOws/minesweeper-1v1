@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-enum SceneAction; 
+enum class SceneAction; 
 
 class IScene{
     private:

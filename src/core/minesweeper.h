@@ -1,14 +1,14 @@
 #pragma once
 #include "SceneManager.h"
 #include "spritemanager.h"
-#include "networkManager.h"
+#include "NetworkManager.h"
 
 //SFML
 #include <SFML/Graphics.hpp>
 
 //std
 #include <variant>
-
+#include <random>
 
 enum class GAMESTATE {
     MENU, 
@@ -25,9 +25,6 @@ enum class GAMESTATE {
     SP_PLAYING
 };
 
-struct NetworkInfo{
-
-};
 
 inline constexpr bool isMultiplayer(GAMESTATE state) {
     return (state >= GAMESTATE::HOSTING_WAITING && state <= GAMESTATE::JOINING_PLAYING);
