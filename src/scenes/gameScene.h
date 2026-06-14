@@ -1,7 +1,9 @@
 #pragma once
+#include "SceneManager.h"
 #include "lobby.h"
 #include "gameHeader.h"
 
+enum class Difficulty;
 
 class GameScene: public IScene{
     private:
@@ -17,7 +19,7 @@ class GameScene: public IScene{
     sf::Clock gameClock;
     int lastSecond = 0;
     int time;
-    
+
     unsigned short tileSize;
     unsigned short col;
     unsigned short row;
@@ -32,7 +34,7 @@ class GameScene: public IScene{
     ~GameScene();
 
     void init();
-    virtual void draw(sf::RenderWindow &window); 
+    virtual void draw(sf::RenderWindow &window);
     virtual SceneAction handleLeftEvent(sf::Vector2f &mousePos);
     virtual SceneAction handleRightEvent(sf::Vector2f &mousePos);
     virtual void update();

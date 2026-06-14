@@ -1,7 +1,7 @@
 #pragma once
 #include "lobby.h"
-#include "gameSCene.h"
-
+#include "../scenes/gameScene.h"
+#include <memory>
 
 struct PlayerInfo{
     std::unique_ptr<sf::TcpSocket> socket;
@@ -20,7 +20,7 @@ class LobbyHosting : public Lobby{
         sf::TcpListener listener;
         sf::Clock broadcastTimer;
 
-        GameScene gScene;
+        GameScene* gScene;
         std::vector<std::optional<PlayerInfo>> players;
 
     public:

@@ -1,5 +1,5 @@
 #pragma once
-#include "net/NetworkInfo.h"
+#include "./net/NetworkInfo.h"
 
 #include <SFML/Network.hpp>
 #include <memory>
@@ -13,12 +13,12 @@ enum class NetMode {
 };
 
 class NetworkManager{
-    public: 
+    public:
     NetMode mode = NetMode::NONE;
 
     //DISCOVERY
     sf::UdpSocket udp;
-    sf::Clock broadcastClock; 
+    sf::Clock broadcastClock;
     //Server Side
     sf::TcpListener listener;
     sf::SocketSelector selector;
